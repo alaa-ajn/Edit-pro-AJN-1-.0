@@ -1,0 +1,1623 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>استوديو ظل الروح - النسخة المتكاملة</title>
+    <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700;900&family=Amiri:wght@400;700&family=Tajawal:wght@400;700&display=swap" rel="stylesheet">
+    <style>
+        * { box-sizing: border-box; margin: 0; padding: 0; font-family: 'Cairo', sans-serif; }
+        body {
+            background: linear-gradient(135deg, #0f0c29, #302b63, #24243e);
+            color: #fff;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: flex-start;
+            padding: 8px;
+            overflow-x: hidden;
+            overflow-y: auto;
+        }
+
+        .app-master {
+            width: 100%;
+            max-width: 480px;
+            height: 94vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            align-items: center;
+            gap: 6px;
+            padding-bottom: 10px;
+        }
+
+        header { margin-bottom: 2px; text-align: center; }
+        header h1 { font-size: 14px; color: #d8b4fe; margin-bottom: 1px; }
+        header p { font-size: 9px; color: #a5b4fc; }
+        
+        .master-container {
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            background: rgba(255, 255, 255, 0.05);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            padding: 8px;
+            border-radius: 14px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.5);
+            width: 100%;
+            flex: 1;
+            gap: 6px;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .image-workspace-section {
+            width: 100%;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            background: rgba(0, 0, 0, 0.35);
+            border: 1px solid rgba(216, 180, 254, 0.2);
+            border-radius: 10px;
+            padding: 6px;
+            flex-shrink: 0;
+            gap: 4px;
+            overflow: hidden;
+            position: relative;
+        }
+
+        .workspace-bottom-actions {
+            width: 100%;
+            display: flex;
+            justify-content: center;
+            gap: 8px;
+            z-index: 20;
+        }
+
+        .action-chip-btn {
+            background: rgba(168, 85, 247, 0.85);
+            border: 1px solid rgba(255, 255, 255, 0.4);
+            color: #fff;
+            padding: 3px 12px;
+            border-radius: 6px;
+            font-size: 10px;
+            font-weight: 700;
+            cursor: pointer;
+            backdrop-filter: blur(4px);
+            transition: 0.2s;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.4);
+            display: inline-flex;
+            align-items: center;
+            gap: 4px;
+        }
+        .action-chip-btn:hover {
+            background: rgba(168, 85, 247, 1);
+            transform: scale(1.05);
+        }
+        .action-chip-btn.revert-btn {
+            background: rgba(239, 68, 68, 0.8);
+        }
+        .action-chip-btn.revert-btn:hover {
+            background: rgba(239, 68, 68, 1);
+        }
+
+        .preview-boundary-box {
+            position: relative;
+            width: 100%;
+            max-width: 100%;
+            aspect-ratio: 16 / 9;
+            border-radius: 6px;
+            overflow: hidden;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.6);
+            border: 2px solid rgba(216, 180, 254, 0.4);
+            background: #000;
+            transition: aspect-ratio 0.3s ease;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: auto;
+        }
+
+        #bgImage {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            display: block;
+        }
+
+        .overlay-layer {
+            position: absolute;
+            padding: 5px 8px;
+            background: rgba(15, 12, 41, 0.85);
+            border: 1px solid rgba(216, 180, 254, 0.4);
+            border-radius: 6px;
+            color: #fff;
+            cursor: grab;
+            user-select: none;
+            backdrop-filter: blur(5px);
+            z-index: 10;
+            text-align: right;
+            transition: border-color 0.2s;
+        }
+        .overlay-layer.active-selected-layer {
+            border-color: #38bdf8 !important;
+            box-shadow: 0 0 10px rgba(56, 189, 248, 0.5);
+        }
+        .overlay-layer:active { cursor: grabbing; }
+
+        .middle-extra-section {
+            width: 100%;
+            flex: 1;
+            background: rgba(15, 12, 41, 0.85);
+            border: 1px solid rgba(216, 180, 254, 0.3);
+            border-radius: 10px;
+            display: flex;
+            flex-direction: column;
+            justify-content: flex-start;
+            padding: 8px;
+            position: relative;
+            overflow-y: auto;
+            gap: 6px;
+        }
+        .middle-extra-section::-webkit-scrollbar { width: 4px; }
+        .middle-extra-section::-webkit-scrollbar-thumb { background: #a855f7; border-radius: 10px; }
+
+        .middle-placeholder {
+            color: rgba(255, 255, 255, 0.35);
+            font-size: 11px;
+            text-align: center;
+            margin: auto;
+        }
+
+        .tab-content-panel {
+            display: none;
+            flex-direction: column;
+            gap: 6px;
+            width: 100%;
+        }
+        .tab-content-panel.show { display: flex; }
+
+        .panel-title {
+            font-size: 11px;
+            color: #d8b4fe;
+            font-weight: 700;
+            text-align: center;
+            border-bottom: 1px solid rgba(216, 180, 254, 0.25);
+            padding-bottom: 3px;
+            margin-bottom: 3px;
+        }
+
+        .main-tabs-bar {
+            display: none;
+            gap: 6px;
+            width: 100%;
+            margin-bottom: 6px;
+            border-bottom: 2px solid rgba(216, 180, 254, 0.3);
+            padding-bottom: 6px;
+            overflow-x: auto;
+            scroll-behavior: smooth;
+            white-space: nowrap;
+            -webkit-overflow-scrolling: touch;
+        }
+        .main-tabs-bar::-webkit-scrollbar { height: 4px; }
+        .main-tabs-bar::-webkit-scrollbar-thumb { background: #a855f7; border-radius: 10px; }
+        .main-tabs-bar.show { display: flex; }
+
+        .main-tab-btn {
+            display: inline-block;
+            background: rgba(255, 255, 255, 0.08);
+            border: 1px solid rgba(216, 180, 254, 0.4);
+            color: #cbd5e1;
+            padding: 6px 12px;
+            border-radius: 6px;
+            font-size: 10px;
+            font-weight: 700;
+            cursor: pointer;
+            text-align: center;
+            transition: 0.2s;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.3);
+            flex-shrink: 0;
+        }
+        .main-tab-btn:hover, .main-tab-btn.active {
+            background: linear-gradient(135deg, #6366f1, #a855f7);
+            color: #fff;
+            border-color: #fff;
+            box-shadow: 0 4px 12px rgba(168, 85, 247, 0.5);
+            transform: translateY(-1px);
+        }
+
+        .preview-display-panel {
+            display: none;
+            flex-direction: column;
+            align-items: center;
+            justify-content: space-between;
+            width: 100%;
+            height: 100%;
+            text-align: center;
+        }
+        .preview-display-panel.show { display: flex; }
+
+        .final-image-preview-container {
+            position: relative;
+            width: 100%;
+            flex: 1;
+            max-height: 130px;
+            border-radius: 6px;
+            overflow: hidden;
+            background: #000;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: auto;
+            border: none;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.6);
+        }
+
+        .icon-back-btn {
+            background: rgba(168, 85, 247, 0.85);
+            border: 1px solid rgba(216, 180, 254, 0.5);
+            border-radius: 50%;
+            width: 26px;
+            height: 26px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.4);
+            margin-top: 2px;
+        }
+        .icon-back-btn:hover {
+            transform: scale(1.1);
+            background: rgba(168, 85, 247, 1);
+            border-color: #fff;
+        }
+        .icon-back-btn img {
+            width: 12px;
+            height: 12px;
+            object-fit: contain;
+            filter: drop-shadow(0 1px 2px rgba(0,0,0,0.3));
+        }
+
+        .tool-box-horizontal {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid rgba(216, 180, 254, 0.2);
+            border-radius: 6px;
+            padding: 5px 8px;
+            gap: 6px;
+        }
+
+        .tool-box-horizontal label {
+            font-size: 10.5px;
+            color: #e2e8f0;
+            font-weight: 600;
+            flex-shrink: 0;
+            min-width: 60px;
+        }
+
+        .tool-control-item {
+            flex: 1;
+            background: rgba(255, 255, 255, 0.08);
+            border: 1px solid rgba(216, 180, 254, 0.3);
+            border-radius: 6px;
+            padding: 4px 6px;
+            color: #fff;
+            font-size: 10.5px;
+            outline: none;
+        }
+        .tool-control-item option { background: #18153b; color: #fff; }
+        .tool-control-item:focus { border-color: #a855f7; }
+
+        .tool-range-slider {
+            flex: 1;
+            accent-color: #a855f7;
+            height: 4px;
+            cursor: pointer;
+        }
+
+        .tool-color-picker {
+            width: 40px;
+            height: 24px;
+            border: 1px solid rgba(216, 180, 254, 0.4);
+            border-radius: 6px;
+            background: transparent;
+            cursor: pointer;
+        }
+
+        .btn-group-horizontal {
+            display: flex;
+            gap: 5px;
+            flex: 1;
+        }
+
+        .sub-action-btn {
+            flex: 1;
+            background: rgba(255, 255, 255, 0.08);
+            border: 1px solid rgba(216, 180, 254, 0.3);
+            color: #d8b4fe;
+            padding: 4px;
+            border-radius: 6px;
+            font-size: 10px;
+            font-weight: 600;
+            cursor: pointer;
+            text-align: center;
+            transition: 0.2s;
+        }
+        .sub-action-btn:hover, .sub-action-btn.active {
+            background: rgba(168, 85, 247, 0.4);
+            border-color: #a855f7;
+            color: #fff;
+        }
+
+        .pos-grid-container {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 6px;
+            padding: 4px;
+            width: 100%;
+        }
+
+        .pos-square-btn {
+            background: linear-gradient(135deg, rgba(99, 102, 241, 0.8), rgba(168, 85, 247, 0.9));
+            border: 1px solid rgba(216, 180, 254, 0.6);
+            color: #fff;
+            width: 75px;
+            height: 42px;
+            border-radius: 6px;
+            font-size: 10.5px;
+            font-weight: 700;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            box-shadow: 0 4px 12px rgba(168, 85, 247, 0.3);
+            transition: all 0.2s ease;
+        }
+        .pos-square-btn:hover {
+            transform: scale(1.05);
+            background: linear-gradient(135deg, rgba(99, 102, 241, 1), rgba(168, 85, 247, 1));
+            border-color: #fff;
+            box-shadow: 0 0 15px rgba(216, 180, 254, 0.6);
+        }
+
+        .pos-middle-row {
+            display: flex;
+            gap: 10px;
+            justify-content: center;
+            width: 100%;
+        }
+
+        .layers-manager-box {
+            display: flex;
+            flex-direction: column;
+            gap: 4px;
+            background: rgba(255, 255, 255, 0.03);
+            border: 1px solid rgba(216, 180, 254, 0.2);
+            border-radius: 6px;
+            padding: 6px;
+        }
+        .layers-list-container {
+            display: flex;
+            flex-direction: column;
+            gap: 3px;
+            max-height: 65px;
+            overflow-y: auto;
+        }
+        .layers-list-container::-webkit-scrollbar { width: 3px; }
+        .layers-list-container::-webkit-scrollbar-thumb { background: #a855f7; border-radius: 10px; }
+
+        .layer-item-row {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            background: rgba(255, 255, 255, 0.06);
+            border: 1px solid rgba(216, 180, 254, 0.2);
+            padding: 3px 6px;
+            border-radius: 5px;
+            font-size: 10px;
+            cursor: pointer;
+            transition: 0.2s;
+        }
+        .layer-item-row.active {
+            background: rgba(168, 85, 247, 0.35);
+            border-color: #a855f7;
+        }
+        .layer-item-actions {
+            display: flex;
+            gap: 3px;
+        }
+        .layer-action-icon-btn {
+            background: rgba(255, 255, 255, 0.1);
+            border: none;
+            color: #fff;
+            width: 18px;
+            height: 18px;
+            border-radius: 4px;
+            font-size: 8px;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        .layer-action-icon-btn:hover { background: rgba(239, 68, 68, 0.8); }
+
+        .dropdown-menu {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            background: #18153b;
+            border: 1px solid rgba(216, 180, 254, 0.5);
+            border-radius: 10px;
+            box-shadow: 0 15px 40px rgba(0,0,0,0.85);
+            width: 85%;
+            max-width: 250px;
+            padding: 10px;
+            display: none;
+            flex-direction: column;
+            gap: 5px;
+            z-index: 99;
+            backdrop-filter: blur(15px);
+        }
+        .dropdown-menu.show { display: flex; }
+
+        .ratio-option {
+            background: rgba(255, 255, 255, 0.04);
+            color: #cbd5e1;
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            padding: 6px;
+            text-align: center;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 10.5px;
+            font-weight: 600;
+            transition: all 0.2s;
+        }
+        .ratio-option:hover {
+            background: rgba(168, 85, 247, 0.25);
+            color: #fff;
+            border-color: rgba(168, 85, 247, 0.5);
+        }
+        .ratio-option.active {
+            background: linear-gradient(135deg, #6366f1, #a855f7);
+            color: #fff;
+        }
+
+        .toolbar-section-box {
+            width: 100%;
+            display: flex;
+            gap: 6px;
+            overflow-x: auto;
+            scroll-behavior: smooth;
+            scrollbar-width: thin;
+            scrollbar-color: #a855f7 rgba(255, 255, 255, 0.05);
+            background: rgba(15, 12, 41, 0.85);
+            border: 1px solid rgba(216, 180, 254, 0.3);
+            border-radius: 10px;
+            padding: 6px;
+            box-shadow: 0 5px 20px rgba(0,0,0,0.4);
+            align-items: center;
+            flex-shrink: 0;
+            position: relative;
+        }
+        .toolbar-section-box::-webkit-scrollbar { height: 3px; }
+        .toolbar-section-box::-webkit-scrollbar-thumb { background: #a855f7; border-radius: 10px; }
+
+        .tool-section {
+            display: flex;
+            align-items: center;
+            gap: 5px;
+            flex-shrink: 0;
+            background: rgba(255, 255, 255, 0.04);
+            padding: 4px 6px;
+            border-radius: 6px;
+            border: 1px solid rgba(255, 255, 255, 0.08);
+        }
+
+        .dropdown-toggle-btn {
+            background: rgba(255, 255, 255, 0.08);
+            color: #d8b4fe;
+            border: 1px solid rgba(216, 180, 254, 0.3);
+            padding: 5px 8px;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 10.5px;
+            font-weight: 600;
+            display: inline-flex;
+            align-items: center;
+            gap: 4px;
+            transition: all 0.2s;
+        }
+        .dropdown-toggle-btn:hover {
+            background: rgba(168, 85, 247, 0.2);
+            border-color: #a855f7;
+        }
+
+        .icon-action-btn {
+            background: rgba(255, 255, 255, 0.06);
+            border: 1px solid rgba(216, 180, 254, 0.3);
+            border-radius: 50%;
+            width: 32px;
+            height: 32px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.2);
+            color: #d8b4fe;
+            text-decoration: none;
+        }
+        .icon-action-btn:hover {
+            transform: scale(1.08);
+            border-color: #a855f7;
+            box-shadow: 0 0 15px rgba(168, 85, 247, 0.5);
+        }
+        .icon-action-btn img {
+            width: 16px;
+            height: 16px;
+            object-fit: contain;
+            filter: drop-shadow(0 2px 4px rgba(0,0,0,0.3));
+        }
+
+        input[type="file"] { display: none; }
+    </style>
+</head>
+<body>
+
+    <div class="app-master">
+
+        <header>
+            <h1>استوديو ظل الروح</h1>
+            <p>إدارة الطبقات وتصميم المحتوى المرئي</p>
+        </header>
+
+        <div class="master-container">
+
+            <div class="image-workspace-section">
+                <div class="preview-boundary-box" id="previewBoundary">
+                    <img id="bgImage" src="https://images.unsplash.com/photo-1534447677768-be436bb09401?q=80&w=1200&auto=format&fit=crop" alt="خلفية التصميم">
+                    <div id="layersWorkspaceContainer"></div>
+                </div>
+
+                <div class="workspace-bottom-actions">
+                    <button class="action-chip-btn" id="previewBtn" onclick="togglePreviewMode(event)">👁️ معاينة التصميم</button>
+                    <button class="action-chip-btn revert-btn" onclick="revertLastAction(event)">↩️ استرجاع الخطأ</button>
+                </div>
+            </div>
+
+            <div class="middle-extra-section" id="middleSection">
+                <div class="middle-placeholder" id="middlePlaceholderText">
+                    <span>[ الديف الأوسط: اضغط على "معاينة التصميم" أو استخدم التبويبات ]</span>
+                </div>
+
+                <div class="main-tabs-bar" id="mainTabsBar">
+                    <button class="main-tab-btn" onclick="switchTab('textTab', this)">✍️ النص</button>
+                    <button class="main-tab-btn" onclick="switchTab('positionTab', this)">📍 موضع النص</button>
+                    <button class="main-tab-btn" onclick="switchTab('fontTab', this)">🔤 الخط</button>
+                    <button class="main-tab-btn" onclick="switchTab('styleTab', this)">🎨 اللون</button>
+                    <button class="main-tab-btn" onclick="switchTab('fontBorderTab', this)">✒️ حدود الخط</button>
+                    <button class="main-tab-btn" onclick="switchTab('bgTab', this)">🖼️ خلفية الصندوق</button>
+                    <button class="main-tab-btn" onclick="switchTab('borderTab', this)">🔲 إطار الصندوق</button>
+                    <button class="main-tab-btn" onclick="switchTab('alignTab', this)">📐 المحاذاة</button>
+                    <button class="main-tab-btn" onclick="switchTab('exportTab', this)">💾 التصدير</button>
+                </div>
+
+                <div class="preview-display-panel" id="previewDisplayPanel">
+                    <div class="final-image-preview-container" id="clonedPreviewContainer"></div>
+                    <button class="icon-back-btn" onclick="closePreviewMode()" title="العودة للتحرير">
+                        <img src="https://img.icons8.com/?size=100&id=40019&format=png&color=fff" alt="عودة">
+                    </button>
+                </div>
+
+                <!-- 1. تبويب النص وطبقاته -->
+                <div class="tab-content-panel" id="textTab">
+                    <div class="panel-title">محتوى النص والطبقات</div>
+                    
+                    <div class="tool-box-horizontal">
+                        <label>الكتابة:</label>
+                        <input type="text" id="textInput" class="tool-control-item" value="ظل الروح" oninput="updateActiveTextContent()">
+                    </div>
+
+                    <div class="layers-manager-box">
+                        <div style="display: flex; justify-content: space-between; align-items: center;">
+                            <span style="font-size: 10px; color: #d8b4fe; font-weight: 700;">طبقات النصوص النشطة:</span>
+                            <button class="sub-action-btn" style="max-width: 85px; padding: 2px;" onclick="addNewLayer()">+ إضافة طبقة</button>
+                        </div>
+                        <div class="layers-list-container" id="layersListContainer"></div>
+                    </div>
+                </div>
+
+                <!-- 📍 تبويب موضع النص -->
+                <div class="tab-content-panel" id="positionTab">
+                    <div class="panel-title">تحكم بموضع ومكان النص</div>
+                    <div style="font-size: 9.5px; color: #cbd5e1; text-align: center; margin-bottom: 2px;">
+                        💡 اسحب النص مباشرة أو استخدم الأزرار أدناه:
+                    </div>
+                    
+                    <div class="pos-grid-container">
+                        <button class="pos-square-btn" onclick="moveText('up')">لأعلى</button>
+                        <div class="pos-middle-row">
+                            <button class="pos-square-btn" onclick="moveText('right')">لليمين</button>
+                            <button class="pos-square-btn" onclick="moveText('center')">الوسط</button>
+                            <button class="pos-square-btn" onclick="moveText('left')">لليسار</button>
+                        </div>
+                        <button class="pos-square-btn" onclick="moveText('down')">لأسفل</button>
+                    </div>
+                </div>
+
+                <!-- 🔤 تبويب الخط وإضافة خط جديد -->
+                <div class="tab-content-panel" id="fontTab">
+                    <div class="panel-title">إعدادات الخط وإضافة خطوط جديدة</div>
+                    
+                    <div class="tool-box-horizontal">
+                        <label>نوع الخط:</label>
+                        <select id="fontFamilySelect" class="tool-control-item" onchange="updateFontFamily()">
+                            <option value="'Cairo', sans-serif">كايرو (Cairo)</option>
+                            <option value="'Amiri', serif">أميري (Amiri)</option>
+                            <option value="'Tajawal', sans-serif">تجوال (Tajawal)</option>
+                        </select>
+                    </div>
+
+                    <div class="tool-box-horizontal">
+                        <label>إضافة خط:</label>
+                        <label class="sub-action-btn" style="text-align: center; display: inline-block; padding: 5px; cursor: pointer;">
+                            📁 رفع ملف خط جديد (.ttf / .woff)
+                            <input type="file" id="fontUploader" accept=".ttf,.woff,.woff2" onchange="loadCustomFont(event)">
+                        </label>
+                    </div>
+
+                    <div class="tool-box-horizontal">
+                        <label>الحجم:</label>
+                        <input type="range" id="sizeRange" class="tool-range-slider" min="10" max="36" value="14" oninput="updateTextSize()">
+                    </div>
+                    <div class="tool-box-horizontal">
+                        <label>السمك:</label>
+                        <div class="btn-group-horizontal">
+                            <button class="sub-action-btn" onclick="setBold(400, this)">عادي</button>
+                            <button class="sub-action-btn active" onclick="setBold(700, this)">عريض</button>
+                            <button class="sub-action-btn" onclick="setBold(900, this)">ثخين</button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- 🎨 تبويب اللون والتوهج الداخلي والخارجي -->
+                <div class="tab-content-panel" id="styleTab">
+                    <div class="panel-title">اللون والتوهج الداخلي والخارجي</div>
+                    <div class="tool-box-horizontal">
+                        <label>لون النص:</label>
+                        <input type="color" id="fontColorPicker" class="tool-color-picker" value="#d8b4fe" oninput="updateFontColor()">
+                    </div>
+                    <div class="tool-box-horizontal">
+                        <label>توهج خارجي:</label>
+                        <input type="range" id="glowOuterRange" class="tool-range-slider" min="0" max="30" value="5" oninput="updateTextGlow()">
+                    </div>
+                    <div class="tool-box-horizontal">
+                        <label>توهج داخلي:</label>
+                        <input type="range" id="glowInnerRange" class="tool-range-slider" min="0" max="25" value="0" oninput="updateTextGlow()">
+                    </div>
+                    <div class="tool-box-horizontal">
+                        <label>الشفافية:</label>
+                        <input type="range" id="opacityRange" class="tool-range-slider" min="0.1" max="1" step="0.05" value="1" oninput="updateTextOpacity()">
+                    </div>
+                </div>
+
+                <!-- تبويب حدود الخط نفسه (Stroke) -->
+                <div class="tab-content-panel" id="fontBorderTab">
+                    <div class="panel-title">حدود وإطار الخط نفسه</div>
+                    <div class="tool-box-horizontal">
+                        <label>سمك الحدود:</label>
+                        <input type="range" id="fontStrokeWidthRange" class="tool-range-slider" min="0" max="4" step="0.5" value="0" oninput="updateFontStroke()">
+                    </div>
+                    <div class="tool-box-horizontal">
+                        <label>لون الحدود:</label>
+                        <input type="color" id="fontStrokeColorPicker" class="tool-color-picker" value="#000000" oninput="updateFontStroke()">
+                    </div>
+                </div>
+
+                <!-- 3. تبويب خلفية الصندوق -->
+                <div class="tab-content-panel" id="bgTab">
+                    <div class="panel-title">خلفية الصندوق</div>
+                    <div class="tool-box-horizontal">
+                        <label>الحالة:</label>
+                        <div class="btn-group-horizontal">
+                            <button class="sub-action-btn active" id="bgShowBtn" onclick="toggleBackground(true, this)">إظهار</button>
+                            <button class="sub-action-btn" id="bgHideBtn" onclick="toggleBackground(false, this)">إخفاء</button>
+                        </div>
+                    </div>
+                    <div class="tool-box-horizontal">
+                        <label>لون الخلفية:</label>
+                        <input type="color" id="bgColorPicker" class="tool-color-picker" value="#0f0c29" oninput="updateBackgroundColor()">
+                    </div>
+                </div>
+
+                <!-- 4. تبويب حدود الصندوق (تم إضافة oninput للون الحدود هنا) -->
+                <div class="tab-content-panel" id="borderTab">
+                    <div class="panel-title">إطار الصندوق والدوران</div>
+                    <div class="tool-box-horizontal">
+                        <label>الحالة:</label>
+                        <div class="btn-group-horizontal">
+                            <button class="sub-action-btn active" id="borderShowBtn" onclick="toggleBorder(true, this)">إظهار</button>
+                            <button class="sub-action-btn" id="borderHideBtn" onclick="toggleBorder(false, this)">إخفاء</button>
+                        </div>
+                    </div>
+                    <div class="tool-box-horizontal">
+                        <label>السمك:</label>
+                        <input type="range" id="borderWidthRange" class="tool-range-slider" min="1" max="8" value="1" oninput="updateBorderWidth()">
+                    </div>
+                    <div class="tool-box-horizontal">
+                        <label>الدوران:</label>
+                        <input type="range" id="borderRadiusRange" class="tool-range-slider" min="0" max="30" value="6" oninput="updateBorderRadius()">
+                    </div>
+                    <div class="tool-box-horizontal">
+                        <label>لون الحدود:</label>
+                        <input type="color" id="borderColorPicker" class="tool-color-picker" value="#d8b4fe" oninput="updateBorderColor()">
+                    </div>
+                </div>
+
+                <!-- 5. تبويب المحاذاة والترتيب -->
+                <div class="tab-content-panel" id="alignTab">
+                    <div class="panel-title">تنسيق المحاذاة</div>
+                    <div class="tool-box-horizontal">
+                        <label>الاتجاه:</label>
+                        <div class="btn-group-horizontal">
+                            <button class="sub-action-btn active" onclick="setTextAlign('right', this)">يمين</button>
+                            <button class="sub-action-btn" onclick="setTextAlign('center', this)">وسط</button>
+                            <button class="sub-action-btn" onclick="setTextAlign('left', this)">يسار</button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- 6. تبويب التصدير والحفظ الجديد -->
+                <div class="tab-content-panel" id="exportTab">
+                    <div class="panel-title">تصدير وحفظ الصورة النهائية</div>
+                    <div style="font-size: 9.5px; color: #cbd5e1; text-align: center;">
+                        📷 معاينة التصميم وجاهزيته للتنزيل:
+                    </div>
+                    <div class="final-image-preview-container" id="exportPreviewContainer"></div>
+                    <button class="action-chip-btn" style="width: 100%; justify-content: center; padding: 6px; font-size: 10.5px;" onclick="exportFinalImage()">💾 حفظ وتنزيل الصورة النهائية</button>
+                </div>
+
+                <!-- قائمة النسب -->
+                <div class="dropdown-menu" id="ratioDropdown">
+                    <button class="ratio-option active" onclick="setAspectRatio('16 / 9', '16:9', this)">أفقي قياسي (16:9)</button>
+                    <button class="ratio-option" onclick="setAspectRatio('9 / 16', '9:16', this)">عمودي / موبايل (9:16)</button>
+                    <button class="ratio-option" onclick="setAspectRatio('1 / 1', '1:1', this)">مربع (1:1)</button>
+                    <button class="ratio-option" onclick="setAspectRatio('4 / 3', '4:3', this)">تقليدي (4:3)</button>
+                    <button class="ratio-option" onclick="setOriginalRatio('الأصلية', this)">النسبة الأصلية للصورة</button>
+                </div>
+            </div>
+
+            <!-- شريط الأدوات بالأسفل -->
+            <div class="toolbar-section-box">
+                <div class="tool-section">
+                    <a href="#" class="icon-action-btn" title="الرئيسية">🏠</a>
+                </div>
+
+                <div class="tool-section">
+                    <button class="dropdown-toggle-btn" onclick="toggleRatioMenu(event)">
+                        📐 النسبة: <span id="currentRatioText">16:9</span> ▼
+                    </button>
+                </div>
+
+                <div class="tool-section">
+                    <label class="icon-action-btn" title="رفع خلفية جديدة">
+                        📁
+                        <input type="file" id="imageUploader" accept="image/*">
+                    </label>
+                </div>
+
+                <div class="tool-section">
+                    <button class="icon-action-btn" onclick="toggleTextEditorTabs(event)" title="تحرير النص">✍️</button>
+                </div>
+
+                <div class="tool-section">
+                    <button class="icon-action-btn" onclick="saveToLocalStorage()" title="حفظ التصميم في المتصفح">💾</button>
+                </div>
+            </div>
+
+        </div>
+
+    </div>
+
+    <script>
+        const previewBoundary = document.getElementById('previewBoundary');
+        const bgImage = document.getElementById('bgImage');
+        const ratioDropdown = document.getElementById('ratioDropdown');
+        const mainTabsBar = document.getElementById('mainTabsBar');
+        const middlePlaceholderText = document.getElementById('middlePlaceholderText');
+        const previewDisplayPanel = document.getElementById('previewDisplayPanel');
+        const currentRatioText = document.getElementById('currentRatioText');
+        const previewBtn = document.getElementById('previewBtn');
+        const clonedPreviewContainer = document.getElementById('clonedPreviewContainer');
+        const exportPreviewContainer = document.getElementById('exportPreviewContainer');
+        const layersWorkspaceContainer = document.getElementById('layersWorkspaceContainer');
+        const layersListContainer = document.getElementById('layersListContainer');
+        
+        const textInput = document.getElementById('textInput');
+        const fontFamilySelect = document.getElementById('fontFamilySelect');
+        const sizeRange = document.getElementById('sizeRange');
+        const glowOuterRange = document.getElementById('glowOuterRange');
+        const glowInnerRange = document.getElementById('glowInnerRange');
+        const fontStrokeWidthRange = document.getElementById('fontStrokeWidthRange');
+        const fontStrokeColorPicker = document.getElementById('fontStrokeColorPicker');
+        const borderColorPicker = document.getElementById('borderColorPicker');
+        
+        let areTabsOpen = false;
+        let isPreviewOpen = false;
+        let historyState = [];
+
+        let layers = [
+            {
+                id: 1,
+                title: "ظل الروح",
+                top: 10,
+                right: 10,
+                fontFamily: "'Cairo', sans-serif",
+                fontSize: "14px",
+                color: "#d8b4fe",
+                fontWeight: "700",
+                textAlign: "right",
+                strokeWidth: "0px",
+                strokeColor: "#000000",
+                bgVisible: true,
+                bgColor: "#0f0c29",
+                borderVisible: true,
+                borderWidth: "1px",
+                borderRadius: "6px",
+                borderColor: "#d8b4fe",
+                glowOuter: "5px",
+                glowInner: "0px",
+                opacity: "1"
+            }
+        ];
+        let activeLayerId = 1;
+
+        function loadFromLocalStorage() {
+            const savedData = localStorage.getItem('soulShadowStudio_data');
+            if (savedData) {
+                try {
+                    const parsed = JSON.parse(savedData);
+                    if (parsed.layers) layers = parsed.layers;
+                    if (parsed.bgImageSrc) bgImage.src = parsed.bgImageSrc;
+                    if (parsed.aspectRatio) {
+                        previewBoundary.style.aspectRatio = parsed.aspectRatio;
+                        currentRatioText.textContent = parsed.ratioText || '16:9';
+                    }
+                } catch(e) {
+                    console.error('خطأ في استرجاع البيانات المخزنة');
+                }
+            }
+        }
+
+        function saveToLocalStorage() {
+            const dataToSave = {
+                layers: layers,
+                bgImageSrc: bgImage.src,
+                aspectRatio: previewBoundary.style.aspectRatio,
+                ratioText: currentRatioText.textContent
+            };
+            localStorage.setItem('soulShadowStudio_data', JSON.stringify(dataToSave));
+        }
+
+        function initLayers() {
+            loadFromLocalStorage();
+            if (layers.length > 0 && !layers.some(l => l.id === activeLayerId)) {
+                activeLayerId = layers[0].id;
+            }
+            renderLayersWorkspace();
+            renderLayersList();
+            syncControlsWithActiveLayer();
+        }
+
+        function renderLayersWorkspace() {
+            layersWorkspaceContainer.innerHTML = '';
+            layers.forEach(layer => {
+                const div = document.createElement('div');
+                div.className = `overlay-layer ${layer.id === activeLayerId ? 'active-selected-layer' : ''}`;
+                div.style.top = layer.top + 'px';
+                div.style.right = layer.right + 'px';
+                div.style.fontFamily = layer.fontFamily;
+                div.style.textAlign = layer.textAlign;
+                div.style.borderRadius = layer.borderRadius;
+                
+                // تطبيق تصفير تام ومباشر للحدود والخلفية عند إيقاف إظهارهما لمنع الأثر
+                div.style.border = layer.borderVisible ? `${layer.borderWidth} solid ${layer.borderColor}` : 'none';
+                div.style.background = layer.bgVisible ? hexToRgba(layer.bgColor, 0.85) : 'transparent';
+                
+                let outerShadow = layer.glowOuter !== "0px" ? `0 0 ${layer.glowOuter} ${layer.color}` : '';
+                let innerShadow = layer.glowInner !== "0px" ? `inset 0 0 ${layer.glowInner} ${layer.color}` : '';
+                let textShadows = [outerShadow, innerShadow].filter(Boolean).join(', ');
+
+                div.innerHTML = `
+                    <h3 style="font-size: ${layer.fontSize}; color: ${layer.color}; font-weight: ${layer.fontWeight}; -webkit-text-stroke: ${layer.strokeWidth} ${layer.strokeColor}; text-shadow: ${textShadows || 'none'}; opacity: ${layer.opacity};">${layer.title}</h3>
+                `;
+
+                div.onmousedown = (e) => {
+                    selectLayer(layer.id);
+                    dragMouseDown(e, div, layer);
+                };
+                div.ontouchstart = (e) => {
+                    selectLayer(layer.id);
+                    dragTouchStart(e, div, layer);
+                };
+
+                layersWorkspaceContainer.appendChild(div);
+            });
+            saveToLocalStorage();
+        }
+
+        function renderLayersList() {
+            layersListContainer.innerHTML = '';
+            layers.forEach((layer, index) => {
+                const row = document.createElement('div');
+                row.className = `layer-item-row ${layer.id === activeLayerId ? 'active' : ''}`;
+                row.innerHTML = `
+                    <span>طبقة ${index + 1}: ${layer.title}</span>
+                    <div class="layer-item-actions">
+                        <button class="layer-action-icon-btn" onclick="selectLayer(${layer.id})" title="تعديل وتحديد">✏️</button>
+                        ${layers.length > 1 ? `<button class="layer-action-icon-btn" onclick="deleteLayer(${layer.id}, event)" title="حذف">🗑️</button>` : ''}
+                    </div>
+                `;
+                row.onclick = () => selectLayer(layer.id);
+                layersListContainer.appendChild(row);
+            });
+        }
+
+        function selectLayer(id) {
+            activeLayerId = id;
+            syncControlsWithActiveLayer();
+            renderLayersWorkspace();
+            renderLayersList();
+        }
+
+        function syncControlsWithActiveLayer() {
+            const layer = layers.find(l => l.id === activeLayerId);
+            if (layer) {
+                textInput.value = layer.title;
+                fontFamilySelect.value = layer.fontFamily;
+                sizeRange.value = parseInt(layer.fontSize) || 14;
+                glowOuterRange.value = parseInt(layer.glowOuter) || 0;
+                glowInnerRange.value = parseInt(layer.glowInner) || 0;
+                document.getElementById('fontColorPicker').value = layer.color;
+                fontStrokeWidthRange.value = parseFloat(layer.strokeWidth) || 0;
+                fontStrokeColorPicker.value = layer.strokeColor || "#000000";
+                borderColorPicker.value = layer.borderColor || "#d8b4fe";
+                document.getElementById('bgColorPicker').value = layer.bgColor || "#0f0c29";
+                document.getElementById('borderWidthRange').value = parseInt(layer.borderWidth) || 1;
+                document.getElementById('borderRadiusRange').value = parseInt(layer.borderRadius) || 6;
+                
+                const bgShowBtn = document.getElementById('bgShowBtn');
+                const bgHideBtn = document.getElementById('bgHideBtn');
+                if (layer.bgVisible) {
+                    bgShowBtn.classList.add('active');
+                    bgHideBtn.classList.remove('active');
+                } else {
+                    bgShowBtn.classList.remove('active');
+                    bgHideBtn.classList.add('active');
+                }
+
+                const borderShowBtn = document.getElementById('borderShowBtn');
+                const borderHideBtn = document.getElementById('borderHideBtn');
+                if (layer.borderVisible) {
+                    borderShowBtn.classList.add('active');
+                    borderHideBtn.classList.remove('active');
+                } else {
+                    borderShowBtn.classList.remove('active');
+                    borderHideBtn.classList.add('active');
+                }
+            }
+        }
+
+        function addNewLayer() {
+            saveState();
+            const newId = Date.now();
+            layers.push({
+                id: newId,
+                title: "نص جديد",
+                top: 40 + (layers.length * 15),
+                right: 20,
+                fontFamily: "'Cairo', sans-serif",
+                fontSize: "14px",
+                color: "#d8b4fe",
+                fontWeight: "700",
+                textAlign: "right",
+                strokeWidth: "0px",
+                strokeColor: "#000000",
+                bgVisible: true,
+                bgColor: "#0f0c29",
+                borderVisible: true,
+                borderWidth: "1px",
+                borderRadius: "6px",
+                borderColor: "#d8b4fe",
+                glowOuter: "5px",
+                glowInner: "0px",
+                opacity: "1"
+            });
+            selectLayer(newId);
+        }
+
+        function deleteLayer(id, e) {
+            e.stopPropagation();
+            if (layers.length <= 1) {
+                alert('لا يمكن حذف الطبقة الأخيرة!');
+                return;
+            }
+            saveState();
+            layers = layers.filter(l => l.id !== id);
+            activeLayerId = layers[0].id;
+            initLayers();
+        }
+
+        function updateActiveTextContent() {
+            saveState();
+            const layer = layers.find(l => l.id === activeLayerId);
+            if (layer) {
+                layer.title = textInput.value;
+                renderLayersWorkspace();
+                renderLayersList();
+            }
+        }
+
+        function saveState() {
+            historyState.push(JSON.parse(JSON.stringify(layers)));
+            if (historyState.length > 10) historyState.shift();
+        }
+
+        function revertLastAction(e) {
+            e.stopPropagation();
+            if (historyState.length > 0) {
+                layers = historyState.pop();
+                if (!layers.some(l => l.id === activeLayerId)) {
+                    activeLayerId = layers[0].id;
+                }
+                initLayers();
+                alert('تم استرجاع الخطوة الأخيرة بنجاح!');
+            } else {
+                alert('لا توجد خطوات سابقة للاسترجاع!');
+            }
+        }
+
+        function hexToRgba(hex, alpha) {
+            let r = parseInt(hex.slice(1, 3), 16) || 15;
+            let g = parseInt(hex.slice(3, 5), 16) || 12;
+            let b = parseInt(hex.slice(5, 7), 16) || 41;
+            return `rgba(${r}, ${g}, ${b}, ${alpha})`;
+        }
+
+        function dragMouseDown(e, elmnt, layer) {
+            if (e.target.tagName === 'BUTTON' || e.target.closest('button')) return;
+            e.preventDefault();
+            let pos3 = e.clientX;
+            let pos4 = e.clientY;
+            
+            document.onmouseup = closeDragElement;
+            document.onmousemove = elementDrag;
+
+            function elementDrag(e) {
+                e.preventDefault();
+                let pos1 = pos3 - e.clientX;
+                let pos2 = pos4 - e.clientY;
+                pos3 = e.clientX;
+                pos4 = e.clientY;
+                
+                layer.top = (elmnt.offsetTop - pos2);
+                layer.right = (elmnt.offsetLeft - pos1);
+                elmnt.style.top = layer.top + "px";
+                elmnt.style.right = layer.right + "px";
+                if(isPreviewOpen) updateClonedPreview();
+            }
+
+            function closeDragElement() {
+                document.onmouseup = null;
+                document.onmousemove = null;
+                saveToLocalStorage();
+            }
+        }
+
+        function dragTouchStart(e, elmnt, layer) {
+            if (e.target.tagName === 'BUTTON' || e.target.closest('button')) return;
+            let touch = e.touches[0];
+            let pos3 = touch.clientX;
+            let pos4 = touch.clientY;
+            
+            document.ontouchend = closeTouchElement;
+            document.ontouchmove = elementTouchDrag;
+
+            function elementTouchDrag(e) {
+                let touch = e.touches[0];
+                let pos1 = pos3 - touch.clientX;
+                let pos2 = pos4 - touch.clientY;
+                pos3 = touch.clientX;
+                pos4 = touch.clientY;
+                
+                layer.top = (elmnt.offsetTop - pos2);
+                layer.right = (elmnt.offsetLeft - pos1);
+                elmnt.style.top = layer.top + "px";
+                elmnt.style.right = layer.right + "px";
+                if(isPreviewOpen) updateClonedPreview();
+            }
+
+            function closeTouchElement() {
+                document.ontouchend = null;
+                document.ontouchmove = null;
+                saveToLocalStorage();
+            }
+        }
+
+        function moveText(direction) {
+            saveState();
+            const layer = layers.find(l => l.id === activeLayerId);
+            if (!layer) return;
+
+            const step = 15;
+            if (direction === 'up') layer.top -= step;
+            if (direction === 'down') layer.top += step;
+            if (direction === 'right') layer.right -= step;
+            if (direction === 'left') layer.right += step;
+            if (direction === 'center') {
+                layer.top = 50;
+                layer.right = 100;
+            }
+            renderLayersWorkspace();
+        }
+
+        function toggleRatioMenu(e) {
+            e.stopPropagation();
+            ratioDropdown.classList.toggle('show');
+            if (isPreviewOpen || areTabsOpen) {
+                middlePlaceholderText.style.display = 'none';
+            } else {
+                middlePlaceholderText.style.display = ratioDropdown.classList.contains('show') ? 'none' : 'block';
+            }
+        }
+
+        function updateClonedPreview() {
+            clonedPreviewContainer.style.aspectRatio = previewBoundary.style.aspectRatio || '16 / 9';
+            clonedPreviewContainer.innerHTML = '';
+            
+            const clonedImg = bgImage.cloneNode(true);
+            clonedPreviewContainer.appendChild(clonedImg);
+            
+            layers.forEach(layer => {
+                const clonedLayer = document.createElement('div');
+                clonedLayer.className = 'overlay-layer';
+                clonedLayer.style.top = (layer.top * 0.9) + 'px';
+                clonedLayer.style.right = (layer.right * 0.9) + 'px';
+                clonedLayer.style.fontFamily = layer.fontFamily;
+                clonedLayer.style.textAlign = layer.textAlign;
+                clonedLayer.style.borderRadius = layer.borderRadius;
+                clonedLayer.style.border = layer.borderVisible ? `${layer.borderWidth} solid ${layer.borderColor}` : 'none';
+                clonedLayer.style.background = layer.bgVisible ? hexToRgba(layer.bgColor, 0.85) : 'transparent';
+                clonedLayer.style.cursor = 'default';
+                
+                let outerShadow = layer.glowOuter !== "0px" ? `0 0 ${layer.glowOuter} ${layer.color}` : '';
+                let innerShadow = layer.glowInner !== "0px" ? `inset 0 0 ${layer.glowInner} ${layer.color}` : '';
+                let textShadows = [outerShadow, innerShadow].filter(Boolean).join(', ');
+
+                clonedLayer.innerHTML = `
+                    <h3 style="font-size: ${layer.fontSize}; color: ${layer.color}; font-weight: ${layer.fontWeight}; -webkit-text-stroke: ${layer.strokeWidth} ${layer.strokeColor}; text-shadow: ${textShadows || 'none'}; opacity: ${layer.opacity};">${layer.title}</h3>
+                `;
+                clonedPreviewContainer.appendChild(clonedLayer);
+            });
+        }
+
+        function updateExportPreview() {
+            exportPreviewContainer.style.aspectRatio = previewBoundary.style.aspectRatio || '16 / 9';
+            exportPreviewContainer.innerHTML = '';
+            
+            const exportImg = bgImage.cloneNode(true);
+            exportPreviewContainer.appendChild(exportImg);
+            
+            layers.forEach(layer => {
+                const exportLayer = document.createElement('div');
+                exportLayer.className = 'overlay-layer';
+                exportLayer.style.top = (layer.top * 0.5) + 'px';
+                exportLayer.style.right = (layer.right * 0.5) + 'px';
+                exportLayer.style.fontFamily = layer.fontFamily;
+                exportLayer.style.textAlign = layer.textAlign;
+                exportLayer.style.borderRadius = layer.borderRadius;
+                exportLayer.style.border = layer.borderVisible ? `${layer.borderWidth} solid ${layer.borderColor}` : 'none';
+                exportLayer.style.background = layer.bgVisible ? hexToRgba(layer.bgColor, 0.85) : 'transparent';
+                exportLayer.style.cursor = 'default';
+                
+                let outerShadow = layer.glowOuter !== "0px" ? `0 0 ${layer.glowOuter} ${layer.color}` : '';
+                let innerShadow = layer.glowInner !== "0px" ? `inset 0 0 ${layer.glowInner} ${layer.color}` : '';
+                let textShadows = [outerShadow, innerShadow].filter(Boolean).join(', ');
+
+                exportLayer.innerHTML = `
+                    <h3 style="font-size: ${layer.fontSize}; color: ${layer.color}; font-weight: ${layer.fontWeight}; -webkit-text-stroke: ${layer.strokeWidth} ${layer.strokeColor}; text-shadow: ${textShadows || 'none'}; opacity: ${layer.opacity};">${layer.title}</h3>
+                `;
+                exportPreviewContainer.appendChild(exportLayer);
+            });
+        }
+
+        function exportFinalImage() {
+            const canvas = document.createElement('canvas');
+            const ctx = canvas.getContext('2d');
+            const img = new Image();
+            img.crossOrigin = "anonymous";
+            img.src = bgImage.src;
+            
+            img.onload = function() {
+                canvas.width = img.naturalWidth || 1200;
+                canvas.height = img.naturalHeight || 675;
+                
+                ctx.drawImage(img, 0, 0, canvas.width, canvas.height);
+                
+                const containerWidth = previewBoundary.clientWidth || 400;
+                const containerHeight = previewBoundary.clientHeight || 225;
+                const scaleX = canvas.width / containerWidth;
+                const scaleY = canvas.height / containerHeight;
+
+                layers.forEach(layer => {
+                    ctx.save();
+                    
+                    const elem = document.querySelector(`.overlay-layer:nth-of-type(${layers.indexOf(layer) + 1})`) || previewBoundary.children[layers.indexOf(layer) + 1];
+                    const w = elem ? elem.offsetWidth : 120;
+                    const h = elem ? elem.offsetHeight : 45;
+                    
+                    const x = canvas.width - ((layer.right + w) * scaleX);
+                    const y = layer.top * scaleY;
+                    const boxWidth = w * scaleX;
+                    const boxHeight = h * scaleY;
+                    const radius = (parseFloat(layer.borderRadius) || 6) * scaleX;
+
+                    // رسم الخلفية فقط إذا كانت مفعلة تماماً
+                    if (layer.bgVisible) {
+                        ctx.beginPath();
+                        ctx.roundRect(x, y, boxWidth, boxHeight, radius);
+                        ctx.fillStyle = hexToRgba(layer.bgColor || '#0f0c29', 0.85);
+                        ctx.fill();
+                    }
+
+                    // رسم الحدود فقط إذا كانت مفعلة تماماً
+                    if (layer.borderVisible) {
+                        ctx.beginPath();
+                        ctx.roundRect(x, y, boxWidth, boxHeight, radius);
+                        ctx.lineWidth = (parseFloat(layer.borderWidth) || 1) * scaleX;
+                        ctx.strokeStyle = layer.borderColor || '#d8b4fe';
+                        ctx.stroke();
+                    }
+
+                    ctx.globalAlpha = parseFloat(layer.opacity) || 1.0;
+                    const fontSizeNum = parseInt(layer.fontSize) || 14;
+                    ctx.font = `${layer.fontWeight || '700'} ${fontSizeNum * scaleX}px Cairo, sans-serif`;
+                    ctx.textAlign = layer.textAlign || 'right';
+                    ctx.textBaseline = 'middle';
+
+                    let textX = x + boxWidth - (10 * scaleX);
+                    if (layer.textAlign === 'center') textX = x + (boxWidth / 2);
+                    if (layer.textAlign === 'left') textX = x + (10 * scaleX);
+                    const textY = y + (boxHeight / 2);
+
+                    const outerGlowVal = parseInt(layer.glowOuter) || 0;
+                    if (outerGlowVal > 0) {
+                        ctx.shadowColor = layer.color;
+                        ctx.shadowBlur = outerGlowVal * scaleX;
+                    }
+
+                    const strokeWidthVal = parseFloat(layer.strokeWidth) || 0;
+                    if (strokeWidthVal > 0) {
+                        ctx.lineWidth = strokeWidthVal * scaleX;
+                        ctx.strokeStyle = layer.strokeColor || '#000000';
+                        ctx.strokeText(layer.title, textX, textY);
+                    }
+
+                    ctx.fillStyle = layer.color || '#d8b4fe';
+                    ctx.fillText(layer.title, textX, textY);
+
+                    ctx.restore();
+                });
+
+                const link = document.createElement('a');
+                link.download = `SoulShadow_${Date.now()}.png`;
+                link.href = canvas.toDataURL('image/png');
+                link.click();
+            };
+        }
+
+        function togglePreviewMode(e) {
+            e.stopPropagation();
+            ratioDropdown.classList.remove('show');
+            mainTabsBar.classList.remove('show');
+            document.querySelectorAll('.tab-content-panel').forEach(p => p.classList.remove('show'));
+
+            isPreviewOpen = !isPreviewOpen;
+            areTabsOpen = false;
+
+            if (isPreviewOpen) {
+                updateClonedPreview();
+                previewDisplayPanel.classList.add('show');
+                middlePlaceholderText.style.display = 'none';
+                previewBtn.textContent = "👁️ إيقاف المعاينة";
+                previewBtn.style.background = "#22c55e";
+            } else {
+                previewDisplayPanel.classList.remove('show');
+                middlePlaceholderText.style.display = 'block';
+                previewBtn.textContent = "👁️ معاينة التصميم";
+                previewBtn.style.background = "";
+            }
+        }
+
+        function closePreviewMode() {
+            isPreviewOpen = false;
+            previewDisplayPanel.classList.remove('show');
+            middlePlaceholderText.style.display = 'block';
+            previewBtn.textContent = "👁️ معاينة التصميم";
+            previewBtn.style.background = "";
+        }
+
+        function toggleTextEditorTabs(e) {
+            e.stopPropagation();
+            ratioDropdown.classList.remove('show');
+            previewDisplayPanel.classList.remove('show');
+            isPreviewOpen = false;
+            previewBtn.textContent = "👁️ معاينة التصميم";
+            previewBtn.style.background = "";
+
+            areTabsOpen = !areTabsOpen;
+            
+            if (areTabsOpen) {
+                mainTabsBar.classList.add('show');
+                middlePlaceholderText.style.display = 'none';
+                switchTab('textTab', document.querySelector('.main-tab-btn'));
+            } else {
+                mainTabsBar.classList.remove('show');
+                document.querySelectorAll('.tab-content-panel').forEach(p => p.classList.remove('show'));
+                middlePlaceholderText.style.display = 'block';
+            }
+        }
+
+        function switchTab(tabId, btnElement) {
+            document.querySelectorAll('.main-tab-btn').forEach(b => b.classList.remove('active'));
+            btnElement.classList.add('active');
+
+            previewDisplayPanel.classList.remove('show');
+            isPreviewOpen = false;
+            previewBtn.textContent = "👁️ معاينة التصميم";
+            previewBtn.style.background = "";
+
+            document.querySelectorAll('.tab-content-panel').forEach(panel => {
+                panel.classList.remove('show');
+                panel.style.display = 'none';
+            });
+
+            const targetPanel = document.getElementById(tabId);
+            if (targetPanel) {
+                targetPanel.classList.add('show');
+                targetPanel.style.display = 'flex';
+                if (tabId === 'exportTab') {
+                    updateExportPreview();
+                }
+            }
+            middlePlaceholderText.style.display = 'none';
+        }
+
+        window.addEventListener('click', () => {
+            if (ratioDropdown.classList.contains('show')) {
+                ratioDropdown.classList.remove('show');
+                middlePlaceholderText.style.display = (isPreviewOpen || areTabsOpen) ? 'none' : 'block';
+            }
+        });
+
+        ratioDropdown.addEventListener('click', (e) => e.stopPropagation());
+        document.getElementById('middleSection').addEventListener('click', (e) => e.stopPropagation());
+
+        function setAspectRatio(ratioValue, labelText, btnElement) {
+            document.querySelectorAll('.ratio-option').forEach(b => b.classList.remove('active'));
+            btnElement.classList.add('active');
+
+            previewBoundary.style.aspectRatio = ratioValue;
+            currentRatioText.textContent = labelText;
+            ratioDropdown.classList.remove('show');
+            middlePlaceholderText.style.display = (isPreviewOpen || areTabsOpen) ? 'none' : 'block';
+            if(isPreviewOpen) updateClonedPreview();
+            saveToLocalStorage();
+        }
+
+        function setOriginalRatio(labelText, btnElement) {
+            document.querySelectorAll('.ratio-option').forEach(b => b.classList.remove('active'));
+            btnElement.classList.add('active');
+
+            const naturalWidth = bgImage.naturalWidth || 800;
+            const naturalHeight = bgImage.naturalHeight || 450;
+            
+            previewBoundary.style.aspectRatio = `${naturalWidth} / ${naturalHeight}`;
+            currentRatioText.textContent = labelText;
+            ratioDropdown.classList.remove('show');
+            middlePlaceholderText.style.display = (isPreviewOpen || areTabsOpen) ? 'none' : 'block';
+            if(isPreviewOpen) updateClonedPreview();
+            saveToLocalStorage();
+        }
+
+        document.getElementById('imageUploader').addEventListener('change', function(e) {
+            const file = e.target.files[0];
+            if (file) {
+                const reader = new FileReader();
+                reader.onload = function(event) {
+                    bgImage.src = event.target.result;
+                    if(isPreviewOpen) updateClonedPreview();
+                    saveToLocalStorage();
+                };
+                reader.readAsDataURL(file);
+            }
+        });
+
+        function loadCustomFont(event) {
+            const file = event.target.files[0];
+            if (file) {
+                const fontName = "CustomFont_" + Date.now();
+                const reader = new FileReader();
+                reader.onload = function(e) {
+                    const fontFace = new FontFace(fontName, e.target.result);
+                    fontFace.load().then(function(loadedFace) {
+                        document.fonts.add(loadedFace);
+                        
+                        const opt = document.createElement('option');
+                        opt.value = `'${fontName}', sans-serif`;
+                        opt.textContent = file.name.replace(/\.[^/.]+$/, "");
+                        fontFamilySelect.appendChild(opt);
+                        fontFamilySelect.value = opt.value;
+                        
+                        updateFontFamily();
+                        alert('تم تحميل الخط الخارجي بنجاح وتطبيقه!');
+                    }).catch(function(err) {
+                        alert('فشل تحميل ملف الخط!');
+                    });
+                };
+                reader.readAsArrayBuffer(file);
+            }
+        }
+
+        function updateFontFamily() {
+            saveState();
+            const layer = layers.find(l => l.id === activeLayerId);
+            if(layer) {
+                layer.fontFamily = fontFamilySelect.value;
+                renderLayersWorkspace();
+            }
+        }
+
+        function updateTextSize() {
+            saveState();
+            const layer = layers.find(l => l.id === activeLayerId);
+            if(layer) {
+                layer.fontSize = sizeRange.value + 'px';
+                renderLayersWorkspace();
+            }
+        }
+
+        function setBold(weight, btn) {
+            saveState();
+            if (btn) {
+                btn.parentElement.querySelectorAll('.sub-action-btn').forEach(b => b.classList.remove('active'));
+                btn.classList.add('active');
+            }
+            const layer = layers.find(l => l.id === activeLayerId);
+            if(layer) {
+                layer.fontWeight = weight;
+                renderLayersWorkspace();
+            }
+        }
+
+        function updateFontColor() {
+            saveState();
+            const layer = layers.find(l => l.id === activeLayerId);
+            if(layer) {
+                layer.color = document.getElementById('fontColorPicker').value;
+                renderLayersWorkspace();
+            }
+        }
+
+        function updateTextGlow() {
+            saveState();
+            const layer = layers.find(l => l.id === activeLayerId);
+            if(layer) {
+                layer.glowOuter = glowOuterRange.value + 'px';
+                layer.glowInner = glowInnerRange.value + 'px';
+                renderLayersWorkspace();
+            }
+        }
+
+        function updateFontStroke() {
+            saveState();
+            const layer = layers.find(l => l.id === activeLayerId);
+            if(layer) {
+                layer.strokeWidth = fontStrokeWidthRange.value + 'px';
+                layer.strokeColor = fontStrokeColorPicker.value;
+                renderLayersWorkspace();
+            }
+        }
+
+        function setTextAlign(align, btn) {
+            saveState();
+            btn.parentElement.querySelectorAll('.sub-action-btn').forEach(b => b.classList.remove('active'));
+            btn.classList.add('active');
+            const layer = layers.find(l => l.id === activeLayerId);
+            if(layer) {
+                layer.textAlign = align;
+                renderLayersWorkspace();
+            }
+        }
+
+        function toggleBackground(show, btn) {
+            saveState();
+            btn.parentElement.querySelectorAll('.sub-action-btn').forEach(b => b.classList.remove('active'));
+            btn.classList.add('active');
+            const layer = layers.find(l => l.id === activeLayerId);
+            if(layer) {
+                layer.bgVisible = show;
+                renderLayersWorkspace();
+            }
+        }
+
+        function updateBackgroundColor() {
+            saveState();
+            const layer = layers.find(l => l.id === activeLayerId);
+            if(layer) {
+                layer.bgColor = document.getElementById('bgColorPicker').value;
+                renderLayersWorkspace();
+            }
+        }
+
+        function toggleBorder(show, btn) {
+            saveState();
+            btn.parentElement.querySelectorAll('.sub-action-btn').forEach(b => b.classList.remove('active'));
+            btn.classList.add('active');
+            const layer = layers.find(l => l.id === activeLayerId);
+            if(layer) {
+                layer.borderVisible = show;
+                renderLayersWorkspace();
+            }
+        }
+
+        function updateBorderWidth() {
+            saveState();
+            const layer = layers.find(l => l.id === activeLayerId);
+            if(layer) {
+                layer.borderWidth = document.getElementById('borderWidthRange').value + 'px';
+                renderLayersWorkspace();
+            }
+        }
+
+        function updateBorderRadius() {
+            saveState();
+            const layer = layers.find(l => l.id === activeLayerId);
+            if(layer) {
+                layer.borderRadius = document.getElementById('borderRadiusRange').value + 'px';
+                renderLayersWorkspace();
+            }
+        }
+
+        function updateBorderColor() {
+            saveState();
+            const layer = layers.find(l => l.id === activeLayerId);
+            if(layer) {
+                layer.borderColor = borderColorPicker.value;
+                renderLayersWorkspace(); // تحديث فوري ولحظي على الطبقة النشطة
+            }
+        }
+
+        function updateTextOpacity() {
+            saveState();
+            const layer = layers.find(l => l.id === activeLayerId);
+            if(layer) {
+                layer.opacity = document.getElementById('opacityRange').value;
+                renderLayersWorkspace();
+            }
+        }
+
+        initLayers();
+    </script>
+</body>
+</html>
