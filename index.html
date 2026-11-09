@@ -14,8 +14,8 @@
             display: flex;
             flex-direction: column;
             align-items: center;
-            justify-content: flex-start;
-            padding: 8px;
+            justify-content: center;
+            padding: 10px 8px; /* إضافة مسافة أمان علوية وسفلية للشاشة */
             overflow-x: hidden;
             overflow-y: auto;
         }
@@ -23,18 +23,18 @@
         .app-master {
             width: 100%;
             max-width: 480px;
-            height: 94vh;
+            height: 92vh; /* تقليل الارتفاع قليلاً لضمان عدم الالتصاق بالحافة السفلية */
             display: flex;
             flex-direction: column;
             justify-content: space-between;
             align-items: center;
-            gap: 6px;
-            padding-bottom: 10px;
+            gap: 4px;
+            padding-bottom: 5px;
         }
 
-        header { margin-bottom: 2px; text-align: center; }
-        header h1 { font-size: 14px; color: #d8b4fe; margin-bottom: 1px; }
-        header p { font-size: 9px; color: #a5b4fc; }
+        header { margin-bottom: 0; text-align: center; }
+        header h1 { font-size: 13px; color: #d8b4fe; margin-bottom: 0; }
+        header p { font-size: 8.5px; color: #a5b4fc; }
         
         .master-container {
             display: flex;
@@ -43,28 +43,29 @@
             background: rgba(255, 255, 255, 0.05);
             backdrop-filter: blur(10px);
             border: 1px solid rgba(255, 255, 255, 0.1);
-            padding: 8px;
-            border-radius: 14px;
+            padding: 6px;
+            border-radius: 12px;
             box-shadow: 0 10px 30px rgba(0,0,0,0.5);
             width: 100%;
             flex: 1;
-            gap: 6px;
+            gap: 5px;
             position: relative;
             overflow: hidden;
         }
 
         .image-workspace-section {
             width: 100%;
+            height: 210px;
             display: flex;
             flex-direction: column;
             justify-content: center;
             align-items: center;
             background: rgba(0, 0, 0, 0.35);
             border: 1px solid rgba(216, 180, 254, 0.2);
-            border-radius: 10px;
-            padding: 6px;
+            border-radius: 8px;
+            padding: 4px;
             flex-shrink: 0;
-            gap: 4px;
+            gap: 3px;
             overflow: hidden;
             position: relative;
         }
@@ -73,25 +74,26 @@
             width: 100%;
             display: flex;
             justify-content: center;
-            gap: 8px;
+            gap: 6px;
             z-index: 20;
+            flex-shrink: 0;
         }
 
         .action-chip-btn {
             background: rgba(168, 85, 247, 0.85);
             border: 1px solid rgba(255, 255, 255, 0.4);
             color: #fff;
-            padding: 3px 12px;
-            border-radius: 6px;
-            font-size: 10px;
+            padding: 2px 10px;
+            border-radius: 5px;
+            font-size: 9.5px;
             font-weight: 700;
             cursor: pointer;
             backdrop-filter: blur(4px);
             transition: 0.2s;
-            box-shadow: 0 2px 8px rgba(0,0,0,0.4);
+            box-shadow: 0 2px 6px rgba(0,0,0,0.4);
             display: inline-flex;
             align-items: center;
-            gap: 4px;
+            gap: 3px;
         }
         .action-chip-btn:hover {
             background: rgba(168, 85, 247, 1);
@@ -106,12 +108,12 @@
 
         .preview-boundary-box {
             position: relative;
-            width: 100%;
-            max-width: 100%;
+            height: 100%;
+            max-height: 165px;
             aspect-ratio: 16 / 9;
-            border-radius: 6px;
+            border-radius: 5px;
             overflow: hidden;
-            box-shadow: 0 4px 15px rgba(0,0,0,0.6);
+            box-shadow: 0 4px 12px rgba(0,0,0,0.6);
             border: 2px solid rgba(216, 180, 254, 0.4);
             background: #000;
             transition: aspect-ratio 0.3s ease;
@@ -124,16 +126,17 @@
         #bgImage {
             width: 100%;
             height: 100%;
-            object-fit: cover;
+            object-fit: contain;
             display: block;
+            transition: filter 0.3s ease;
         }
 
         .overlay-layer {
             position: absolute;
-            padding: 5px 8px;
+            padding: 4px 6px;
             background: rgba(15, 12, 41, 0.85);
             border: 1px solid rgba(216, 180, 254, 0.4);
-            border-radius: 6px;
+            border-radius: 5px;
             color: #fff;
             cursor: grab;
             user-select: none;
@@ -141,10 +144,11 @@
             z-index: 10;
             text-align: right;
             transition: border-color 0.2s;
+            white-space: nowrap;
         }
         .overlay-layer.active-selected-layer {
             border-color: #38bdf8 !important;
-            box-shadow: 0 0 10px rgba(56, 189, 248, 0.5);
+            box-shadow: 0 0 8px rgba(56, 189, 248, 0.5);
         }
         .overlay-layer:active { cursor: grabbing; }
 
@@ -153,21 +157,21 @@
             flex: 1;
             background: rgba(15, 12, 41, 0.85);
             border: 1px solid rgba(216, 180, 254, 0.3);
-            border-radius: 10px;
+            border-radius: 8px;
             display: flex;
             flex-direction: column;
             justify-content: flex-start;
-            padding: 8px;
+            padding: 6px;
             position: relative;
             overflow-y: auto;
-            gap: 6px;
+            gap: 5px;
         }
-        .middle-extra-section::-webkit-scrollbar { width: 4px; }
+        .middle-extra-section::-webkit-scrollbar { width: 3px; }
         .middle-extra-section::-webkit-scrollbar-thumb { background: #a855f7; border-radius: 10px; }
 
         .middle-placeholder {
             color: rgba(255, 255, 255, 0.35);
-            font-size: 11px;
+            font-size: 10.5px;
             text-align: center;
             margin: auto;
         }
@@ -175,34 +179,34 @@
         .tab-content-panel {
             display: none;
             flex-direction: column;
-            gap: 6px;
+            gap: 5px;
             width: 100%;
         }
         .tab-content-panel.show { display: flex; }
 
         .panel-title {
-            font-size: 11px;
+            font-size: 10.5px;
             color: #d8b4fe;
             font-weight: 700;
             text-align: center;
             border-bottom: 1px solid rgba(216, 180, 254, 0.25);
-            padding-bottom: 3px;
-            margin-bottom: 3px;
+            padding-bottom: 2px;
+            margin-bottom: 2px;
         }
 
         .main-tabs-bar {
             display: none;
-            gap: 6px;
+            gap: 5px;
             width: 100%;
-            margin-bottom: 6px;
+            margin-bottom: 5px;
             border-bottom: 2px solid rgba(216, 180, 254, 0.3);
-            padding-bottom: 6px;
+            padding-bottom: 5px;
             overflow-x: auto;
             scroll-behavior: smooth;
             white-space: nowrap;
             -webkit-overflow-scrolling: touch;
         }
-        .main-tabs-bar::-webkit-scrollbar { height: 4px; }
+        .main-tabs-bar::-webkit-scrollbar { height: 3px; }
         .main-tabs-bar::-webkit-scrollbar-thumb { background: #a855f7; border-radius: 10px; }
         .main-tabs-bar.show { display: flex; }
 
@@ -211,21 +215,21 @@
             background: rgba(255, 255, 255, 0.08);
             border: 1px solid rgba(216, 180, 254, 0.4);
             color: #cbd5e1;
-            padding: 6px 12px;
-            border-radius: 6px;
-            font-size: 10px;
+            padding: 5px 10px;
+            border-radius: 5px;
+            font-size: 9.5px;
             font-weight: 700;
             cursor: pointer;
             text-align: center;
             transition: 0.2s;
-            box-shadow: 0 2px 5px rgba(0,0,0,0.3);
+            box-shadow: 0 2px 4px rgba(0,0,0,0.3);
             flex-shrink: 0;
         }
         .main-tab-btn:hover, .main-tab-btn.active {
             background: linear-gradient(135deg, #6366f1, #a855f7);
             color: #fff;
             border-color: #fff;
-            box-shadow: 0 4px 12px rgba(168, 85, 247, 0.5);
+            box-shadow: 0 3px 10px rgba(168, 85, 247, 0.5);
             transform: translateY(-1px);
         }
 
@@ -244,42 +248,37 @@
             position: relative;
             width: 100%;
             flex: 1;
-            max-height: 130px;
-            border-radius: 6px;
+            max-height: 140px;
+            aspect-ratio: 16 / 9;
+            border-radius: 5px;
             overflow: hidden;
             background: #000;
             display: flex;
             align-items: center;
             justify-content: center;
             margin: auto;
-            border: none;
-            box-shadow: 0 4px 15px rgba(0,0,0,0.6);
+            border: 2px solid rgba(216, 180, 254, 0.4);
+            box-shadow: 0 4px 12px rgba(0,0,0,0.6);
         }
 
         .icon-back-btn {
             background: rgba(168, 85, 247, 0.85);
             border: 1px solid rgba(216, 180, 254, 0.5);
             border-radius: 50%;
-            width: 26px;
-            height: 26px;
+            width: 24px;
+            height: 24px;
             display: flex;
             align-items: center;
             justify-content: center;
             cursor: pointer;
             transition: all 0.2s ease;
-            box-shadow: 0 2px 8px rgba(0,0,0,0.4);
+            box-shadow: 0 2px 6px rgba(0,0,0,0.4);
             margin-top: 2px;
         }
         .icon-back-btn:hover {
             transform: scale(1.1);
             background: rgba(168, 85, 247, 1);
             border-color: #fff;
-        }
-        .icon-back-btn img {
-            width: 12px;
-            height: 12px;
-            object-fit: contain;
-            filter: drop-shadow(0 1px 2px rgba(0,0,0,0.3));
         }
 
         .tool-box-horizontal {
@@ -288,27 +287,27 @@
             justify-content: space-between;
             background: rgba(255, 255, 255, 0.05);
             border: 1px solid rgba(216, 180, 254, 0.2);
-            border-radius: 6px;
-            padding: 5px 8px;
-            gap: 6px;
+            border-radius: 5px;
+            padding: 4px 6px;
+            gap: 5px;
         }
 
         .tool-box-horizontal label {
-            font-size: 10.5px;
+            font-size: 10px;
             color: #e2e8f0;
             font-weight: 600;
             flex-shrink: 0;
-            min-width: 60px;
+            min-width: 55px;
         }
 
         .tool-control-item {
             flex: 1;
             background: rgba(255, 255, 255, 0.08);
             border: 1px solid rgba(216, 180, 254, 0.3);
-            border-radius: 6px;
-            padding: 4px 6px;
+            border-radius: 5px;
+            padding: 3px 5px;
             color: #fff;
-            font-size: 10.5px;
+            font-size: 10px;
             outline: none;
         }
         .tool-control-item option { background: #18153b; color: #fff; }
@@ -317,22 +316,22 @@
         .tool-range-slider {
             flex: 1;
             accent-color: #a855f7;
-            height: 4px;
+            height: 3px;
             cursor: pointer;
         }
 
         .tool-color-picker {
-            width: 40px;
-            height: 24px;
+            width: 35px;
+            height: 22px;
             border: 1px solid rgba(216, 180, 254, 0.4);
-            border-radius: 6px;
+            border-radius: 5px;
             background: transparent;
             cursor: pointer;
         }
 
         .btn-group-horizontal {
             display: flex;
-            gap: 5px;
+            gap: 4px;
             flex: 1;
         }
 
@@ -341,9 +340,9 @@
             background: rgba(255, 255, 255, 0.08);
             border: 1px solid rgba(216, 180, 254, 0.3);
             color: #d8b4fe;
-            padding: 4px;
-            border-radius: 6px;
-            font-size: 10px;
+            padding: 3px;
+            border-radius: 5px;
+            font-size: 9.5px;
             font-weight: 600;
             cursor: pointer;
             text-align: center;
@@ -359,8 +358,8 @@
             display: flex;
             flex-direction: column;
             align-items: center;
-            gap: 6px;
-            padding: 4px;
+            gap: 5px;
+            padding: 3px;
             width: 100%;
         }
 
@@ -368,28 +367,27 @@
             background: linear-gradient(135deg, rgba(99, 102, 241, 0.8), rgba(168, 85, 247, 0.9));
             border: 1px solid rgba(216, 180, 254, 0.6);
             color: #fff;
-            width: 75px;
-            height: 42px;
-            border-radius: 6px;
-            font-size: 10.5px;
+            width: 70px;
+            height: 38px;
+            border-radius: 5px;
+            font-size: 10px;
             font-weight: 700;
             cursor: pointer;
             display: flex;
             align-items: center;
             justify-content: center;
-            box-shadow: 0 4px 12px rgba(168, 85, 247, 0.3);
+            box-shadow: 0 3px 10px rgba(168, 85, 247, 0.3);
             transition: all 0.2s ease;
         }
         .pos-square-btn:hover {
             transform: scale(1.05);
             background: linear-gradient(135deg, rgba(99, 102, 241, 1), rgba(168, 85, 247, 1));
             border-color: #fff;
-            box-shadow: 0 0 15px rgba(216, 180, 254, 0.6);
         }
 
         .pos-middle-row {
             display: flex;
-            gap: 10px;
+            gap: 8px;
             justify-content: center;
             width: 100%;
         }
@@ -397,20 +395,20 @@
         .layers-manager-box {
             display: flex;
             flex-direction: column;
-            gap: 4px;
+            gap: 3px;
             background: rgba(255, 255, 255, 0.03);
             border: 1px solid rgba(216, 180, 254, 0.2);
-            border-radius: 6px;
-            padding: 6px;
+            border-radius: 5px;
+            padding: 5px;
         }
         .layers-list-container {
             display: flex;
             flex-direction: column;
             gap: 3px;
-            max-height: 65px;
+            max-height: 55px;
             overflow-y: auto;
         }
-        .layers-list-container::-webkit-scrollbar { width: 3px; }
+        .layers-list-container::-webkit-scrollbar { width: 2px; }
         .layers-list-container::-webkit-scrollbar-thumb { background: #a855f7; border-radius: 10px; }
 
         .layer-item-row {
@@ -419,9 +417,9 @@
             justify-content: space-between;
             background: rgba(255, 255, 255, 0.06);
             border: 1px solid rgba(216, 180, 254, 0.2);
-            padding: 3px 6px;
-            border-radius: 5px;
-            font-size: 10px;
+            padding: 2px 5px;
+            border-radius: 4px;
+            font-size: 9.5px;
             cursor: pointer;
             transition: 0.2s;
         }
@@ -431,15 +429,15 @@
         }
         .layer-item-actions {
             display: flex;
-            gap: 3px;
+            gap: 2px;
         }
         .layer-action-icon-btn {
             background: rgba(255, 255, 255, 0.1);
             border: none;
             color: #fff;
-            width: 18px;
-            height: 18px;
-            border-radius: 4px;
+            width: 16px;
+            height: 16px;
+            border-radius: 3px;
             font-size: 8px;
             cursor: pointer;
             display: flex;
@@ -455,14 +453,14 @@
             transform: translate(-50%, -50%);
             background: #18153b;
             border: 1px solid rgba(216, 180, 254, 0.5);
-            border-radius: 10px;
-            box-shadow: 0 15px 40px rgba(0,0,0,0.85);
-            width: 85%;
-            max-width: 250px;
-            padding: 10px;
+            border-radius: 8px;
+            box-shadow: 0 15px 30px rgba(0,0,0,0.85);
+            width: 80%;
+            max-width: 230px;
+            padding: 8px;
             display: none;
             flex-direction: column;
-            gap: 5px;
+            gap: 4px;
             z-index: 99;
             backdrop-filter: blur(15px);
         }
@@ -472,11 +470,11 @@
             background: rgba(255, 255, 255, 0.04);
             color: #cbd5e1;
             border: 1px solid rgba(255, 255, 255, 0.08);
-            padding: 6px;
+            padding: 5px;
             text-align: center;
-            border-radius: 5px;
+            border-radius: 4px;
             cursor: pointer;
-            font-size: 10.5px;
+            font-size: 10px;
             font-weight: 600;
             transition: all 0.2s;
         }
@@ -493,31 +491,31 @@
         .toolbar-section-box {
             width: 100%;
             display: flex;
-            gap: 6px;
+            gap: 5px;
             overflow-x: auto;
             scroll-behavior: smooth;
             scrollbar-width: thin;
             scrollbar-color: #a855f7 rgba(255, 255, 255, 0.05);
             background: rgba(15, 12, 41, 0.85);
             border: 1px solid rgba(216, 180, 254, 0.3);
-            border-radius: 10px;
-            padding: 6px;
-            box-shadow: 0 5px 20px rgba(0,0,0,0.4);
+            border-radius: 8px;
+            padding: 5px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.4);
             align-items: center;
             flex-shrink: 0;
             position: relative;
         }
-        .toolbar-section-box::-webkit-scrollbar { height: 3px; }
+        .toolbar-section-box::-webkit-scrollbar { height: 2px; }
         .toolbar-section-box::-webkit-scrollbar-thumb { background: #a855f7; border-radius: 10px; }
 
         .tool-section {
             display: flex;
             align-items: center;
-            gap: 5px;
+            gap: 4px;
             flex-shrink: 0;
             background: rgba(255, 255, 255, 0.04);
-            padding: 4px 6px;
-            border-radius: 6px;
+            padding: 3px 5px;
+            border-radius: 5px;
             border: 1px solid rgba(255, 255, 255, 0.08);
         }
 
@@ -525,14 +523,14 @@
             background: rgba(255, 255, 255, 0.08);
             color: #d8b4fe;
             border: 1px solid rgba(216, 180, 254, 0.3);
-            padding: 5px 8px;
-            border-radius: 5px;
+            padding: 4px 7px;
+            border-radius: 4px;
             cursor: pointer;
-            font-size: 10.5px;
+            font-size: 10px;
             font-weight: 600;
             display: inline-flex;
             align-items: center;
-            gap: 4px;
+            gap: 3px;
             transition: all 0.2s;
         }
         .dropdown-toggle-btn:hover {
@@ -544,8 +542,8 @@
             background: rgba(255, 255, 255, 0.06);
             border: 1px solid rgba(216, 180, 254, 0.3);
             border-radius: 50%;
-            width: 32px;
-            height: 32px;
+            width: 28px;
+            height: 28px;
             display: flex;
             align-items: center;
             justify-content: center;
@@ -553,20 +551,15 @@
             transition: all 0.3s ease;
             position: relative;
             overflow: hidden;
-            box-shadow: 0 4px 10px rgba(0,0,0,0.2);
+            box-shadow: 0 3px 8px rgba(0,0,0,0.2);
             color: #d8b4fe;
             text-decoration: none;
+            font-size: 12px;
         }
         .icon-action-btn:hover {
             transform: scale(1.08);
             border-color: #a855f7;
-            box-shadow: 0 0 15px rgba(168, 85, 247, 0.5);
-        }
-        .icon-action-btn img {
-            width: 16px;
-            height: 16px;
-            object-fit: contain;
-            filter: drop-shadow(0 2px 4px rgba(0,0,0,0.3));
+            box-shadow: 0 0 12px rgba(168, 85, 247, 0.5);
         }
 
         input[type="file"] { display: none; }
@@ -608,15 +601,16 @@
                     <button class="main-tab-btn" onclick="switchTab('fontBorderTab', this)">✒️ حدود الخط</button>
                     <button class="main-tab-btn" onclick="switchTab('bgTab', this)">🖼️ خلفية الصندوق</button>
                     <button class="main-tab-btn" onclick="switchTab('borderTab', this)">🔲 إطار الصندوق</button>
+                    <button class="main-tab-btn" onclick="switchTab('filtersTab', this)">✨ الفلاتر</button>
+                    <button class="main-tab-btn" onclick="switchTab('textPresetsTab', this)">📜 أنماط النص</button>
+                    <button class="main-tab-btn" onclick="switchTab('templatesTab', this)">📂 إدارة القوالب</button>
                     <button class="main-tab-btn" onclick="switchTab('alignTab', this)">📐 المحاذاة</button>
                     <button class="main-tab-btn" onclick="switchTab('exportTab', this)">💾 التصدير</button>
                 </div>
 
                 <div class="preview-display-panel" id="previewDisplayPanel">
                     <div class="final-image-preview-container" id="clonedPreviewContainer"></div>
-                    <button class="icon-back-btn" onclick="closePreviewMode()" title="العودة للتحرير">
-                        <img src="https://img.icons8.com/?size=100&id=40019&format=png&color=fff" alt="عودة">
-                    </button>
+                    <button class="icon-back-btn" onclick="closePreviewMode()" title="العودة للتحرير">↩️</button>
                 </div>
 
                 <!-- 1. تبويب النص وطبقاته -->
@@ -625,22 +619,23 @@
                     
                     <div class="tool-box-horizontal">
                         <label>الكتابة:</label>
-                        <input type="text" id="textInput" class="tool-control-item" value="ظل الروح" oninput="updateActiveTextContent()">
+                        <input type="text" id="textInput" class="tool-control-item" value="" placeholder="اكتب النص هنا..." oninput="updateActiveTextContent()">
                     </div>
 
                     <div class="layers-manager-box">
                         <div style="display: flex; justify-content: space-between; align-items: center;">
-                            <span style="font-size: 10px; color: #d8b4fe; font-weight: 700;">طبقات النصوص النشطة:</span>
-                            <button class="sub-action-btn" style="max-width: 85px; padding: 2px;" onclick="addNewLayer()">+ إضافة طبقة</button>
+                            <span style="font-size: 9.5px; color: #d8b4fe; font-weight: 700;">طبقات النصوص النشطة:</span>
+                            <button class="sub-action-btn" style="max-width: 80px; padding: 2px;" onclick="addNewLayer()">+ إضافة طبقة</button>
                         </div>
                         <div class="layers-list-container" id="layersListContainer"></div>
+                        <button class="action-chip-btn revert-btn" style="width: 100%; justify-content: center; padding: 4px; margin-top: 3px;" onclick="deleteActiveLayerBtn()">🗑️ حذف الطبقة المحددة حالياً</button>
                     </div>
                 </div>
 
                 <!-- 📍 تبويب موضع النص -->
                 <div class="tab-content-panel" id="positionTab">
                     <div class="panel-title">تحكم بموضع ومكان النص</div>
-                    <div style="font-size: 9.5px; color: #cbd5e1; text-align: center; margin-bottom: 2px;">
+                    <div style="font-size: 9px; color: #cbd5e1; text-align: center; margin-bottom: 2px;">
                         💡 اسحب النص مباشرة أو استخدم الأزرار أدناه:
                     </div>
                     
@@ -670,7 +665,7 @@
 
                     <div class="tool-box-horizontal">
                         <label>إضافة خط:</label>
-                        <label class="sub-action-btn" style="text-align: center; display: inline-block; padding: 5px; cursor: pointer;">
+                        <label class="sub-action-btn" style="text-align: center; display: inline-block; padding: 4px; cursor: pointer;">
                             📁 رفع ملف خط جديد (.ttf / .woff)
                             <input type="file" id="fontUploader" accept=".ttf,.woff,.woff2" onchange="loadCustomFont(event)">
                         </label>
@@ -740,14 +735,17 @@
                     </div>
                 </div>
 
-                <!-- 4. تبويب حدود الصندوق (تم إضافة oninput للون الحدود هنا) -->
+                <!-- 4. تبويب حدود الصندوق مع مزامنة الطبقة النشطة بدقة -->
                 <div class="tab-content-panel" id="borderTab">
-                    <div class="panel-title">إطار الصندوق والدوران</div>
+                    <div class="panel-title">إطار الصندوق والدوران والطبقة النشطة</div>
+                    <div style="font-size: 8.5px; color: #a5b4fc; text-align: center; margin-bottom: 2px;">
+                        📌 تتم التعديلات أدناه مباشرة وتزامناً على الطبقة النشطة حالياً:
+                    </div>
                     <div class="tool-box-horizontal">
                         <label>الحالة:</label>
                         <div class="btn-group-horizontal">
-                            <button class="sub-action-btn active" id="borderShowBtn" onclick="toggleBorder(true, this)">إظهار</button>
-                            <button class="sub-action-btn" id="borderHideBtn" onclick="toggleBorder(false, this)">إخفاء</button>
+                            <button class="sub-action-btn active" id="borderShowBtn" onclick="toggleBorder(true, this)">إظهار الإطار</button>
+                            <button class="sub-action-btn" id="borderHideBtn" onclick="toggleBorder(false, this)">إخفاء الإطار</button>
                         </div>
                     </div>
                     <div class="tool-box-horizontal">
@@ -759,8 +757,46 @@
                         <input type="range" id="borderRadiusRange" class="tool-range-slider" min="0" max="30" value="6" oninput="updateBorderRadius()">
                     </div>
                     <div class="tool-box-horizontal">
-                        <label>لون الحدود:</label>
+                        <label>لون الإطار:</label>
                         <input type="color" id="borderColorPicker" class="tool-color-picker" value="#d8b4fe" oninput="updateBorderColor()">
+                    </div>
+                </div>
+
+                <!-- ✨ قسم الفلاتر البصرية الجديدة -->
+                <div class="tab-content-panel" id="filtersTab">
+                    <div class="panel-title">فلاتر تأثيرات الخلفية والصورة</div>
+                    <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 4px;">
+                        <button class="sub-action-btn" onclick="applyFilter('none')">بدون فلتر (عادي)</button>
+                        <button class="sub-action-btn" onclick="applyFilter('cinematic')">🎬 سينمائي دافئ</button>
+                        <button class="sub-action-btn" onclick="applyFilter('night')">🌙 ليلي بارد</button>
+                        <button class="sub-action-btn" onclick="applyFilter('contrast')">⚡ تباين عالي</button>
+                        <button class="sub-action-btn" onclick="applyFilter('sepia')">📜 قديم (Sepia)</button>
+                        <button class="sub-action-btn" onclick="applyFilter('grayscale')">🖤 أسود وأبيض</button>
+                    </div>
+                </div>
+
+                <!-- 📜 أنماط النص الجاهزة -->
+                <div class="tab-content-panel" id="textPresetsTab">
+                    <div class="panel-title">أنماط النصوص الفورية</div>
+                    <div style="display: flex; flex-direction: column; gap: 4px;">
+                        <button class="action-chip-btn" style="width: 100%; justify-content: center; padding: 4px;" onclick="applyTextPreset('title')">👑 نمط عنوان بارز (مضيء)</button>
+                        <button class="action-chip-btn" style="width: 100%; justify-content: center; padding: 4px; background: rgba(56, 189, 248, 0.8);" onclick="applyTextPreset('poetic')">💭 نمط خواطر شعرية ناعمة</button>
+                        <button class="action-chip-btn" style="width: 100%; justify-content: center; padding: 4px; background: rgba(239, 68, 68, 0.8);" onclick="applyTextPreset('alert')">🔥 نمط تنبيه أو عبارة قوية</button>
+                    </div>
+                </div>
+
+                <!-- 📂 قسم إدارة القوالب الشامل -->
+                <div class="tab-content-panel" id="templatesTab">
+                    <div class="panel-title">إدارة القوالب (إنشاء وحذف وتعديل)</div>
+                    <div class="tool-box-horizontal">
+                        <label>اسم القالب:</label>
+                        <input type="text" id="newTemplateNameInput" class="tool-control-item" placeholder="اسم القالب الجديد...">
+                    </div>
+                    <button class="action-chip-btn" style="width: 100%; justify-content: center; padding: 4px;" onclick="saveCurrentAsTemplate()">➕ حفظ تصميمي الحالي كقالب جديد</button>
+                    
+                    <div class="layers-manager-box" style="margin-top: 3px;">
+                        <span style="font-size: 9px; color: #d8b4fe; font-weight: 700;">القوالب المحفوظة:</span>
+                        <div class="layers-list-container" id="customTemplatesListContainer"></div>
                     </div>
                 </div>
 
@@ -777,14 +813,11 @@
                     </div>
                 </div>
 
-                <!-- 6. تبويب التصدير والحفظ الجديد -->
+                <!-- 7. تبويب التصدير والحفظ -->
                 <div class="tab-content-panel" id="exportTab">
                     <div class="panel-title">تصدير وحفظ الصورة النهائية</div>
-                    <div style="font-size: 9.5px; color: #cbd5e1; text-align: center;">
-                        📷 معاينة التصميم وجاهزيته للتنزيل:
-                    </div>
                     <div class="final-image-preview-container" id="exportPreviewContainer"></div>
-                    <button class="action-chip-btn" style="width: 100%; justify-content: center; padding: 6px; font-size: 10.5px;" onclick="exportFinalImage()">💾 حفظ وتنزيل الصورة النهائية</button>
+                    <button class="action-chip-btn" style="width: 100%; justify-content: center; padding: 5px; font-size: 10px;" onclick="exportFinalImage()">💾 حفظ وتنزيل الصورة النهائية</button>
                 </div>
 
                 <!-- قائمة النسب -->
@@ -823,6 +856,10 @@
                 <div class="tool-section">
                     <button class="icon-action-btn" onclick="saveToLocalStorage()" title="حفظ التصميم في المتصفح">💾</button>
                 </div>
+
+                <div class="tool-section">
+                    <button class="icon-action-btn" onclick="clearLocalStorageApp()" title="مسح الذاكرة المحلية (Local Storage)" style="background: rgba(239, 68, 68, 0.3); border-color: rgba(239, 68, 68, 0.6);">🗑️</button>
+                </div>
             </div>
 
         </div>
@@ -842,6 +879,7 @@
         const exportPreviewContainer = document.getElementById('exportPreviewContainer');
         const layersWorkspaceContainer = document.getElementById('layersWorkspaceContainer');
         const layersListContainer = document.getElementById('layersListContainer');
+        const customTemplatesListContainer = document.getElementById('customTemplatesListContainer');
         
         const textInput = document.getElementById('textInput');
         const fontFamilySelect = document.getElementById('fontFamilySelect');
@@ -856,31 +894,9 @@
         let isPreviewOpen = false;
         let historyState = [];
 
-        let layers = [
-            {
-                id: 1,
-                title: "ظل الروح",
-                top: 10,
-                right: 10,
-                fontFamily: "'Cairo', sans-serif",
-                fontSize: "14px",
-                color: "#d8b4fe",
-                fontWeight: "700",
-                textAlign: "right",
-                strokeWidth: "0px",
-                strokeColor: "#000000",
-                bgVisible: true,
-                bgColor: "#0f0c29",
-                borderVisible: true,
-                borderWidth: "1px",
-                borderRadius: "6px",
-                borderColor: "#d8b4fe",
-                glowOuter: "5px",
-                glowInner: "0px",
-                opacity: "1"
-            }
-        ];
-        let activeLayerId = 1;
+        let layers = [];
+        let activeLayerId = null;
+        let customTemplates = [];
 
         function loadFromLocalStorage() {
             const savedData = localStorage.getItem('soulShadowStudio_data');
@@ -889,6 +905,7 @@
                     const parsed = JSON.parse(savedData);
                     if (parsed.layers) layers = parsed.layers;
                     if (parsed.bgImageSrc) bgImage.src = parsed.bgImageSrc;
+                    if (parsed.customTemplates) customTemplates = parsed.customTemplates;
                     if (parsed.aspectRatio) {
                         previewBoundary.style.aspectRatio = parsed.aspectRatio;
                         currentRatioText.textContent = parsed.ratioText || '16:9';
@@ -903,19 +920,34 @@
             const dataToSave = {
                 layers: layers,
                 bgImageSrc: bgImage.src,
+                customTemplates: customTemplates,
                 aspectRatio: previewBoundary.style.aspectRatio,
                 ratioText: currentRatioText.textContent
             };
             localStorage.setItem('soulShadowStudio_data', JSON.stringify(dataToSave));
         }
 
+        function clearLocalStorageApp() {
+            if (confirm('هل أنت متأكد من مسح كافة البيانات المخزنة (Local Storage) وإعادة ضبط التطبيق؟')) {
+                localStorage.removeItem('soulShadowStudio_data');
+                layers = [];
+                activeLayerId = null;
+                customTemplates = [];
+                initLayers();
+                alert('تم مسح الذاكرة المحلية بنجاح!');
+            }
+        }
+
         function initLayers() {
             loadFromLocalStorage();
             if (layers.length > 0 && !layers.some(l => l.id === activeLayerId)) {
                 activeLayerId = layers[0].id;
+            } else if (layers.length === 0) {
+                activeLayerId = null;
             }
             renderLayersWorkspace();
             renderLayersList();
+            renderTemplatesList();
             syncControlsWithActiveLayer();
         }
 
@@ -930,7 +962,6 @@
                 div.style.textAlign = layer.textAlign;
                 div.style.borderRadius = layer.borderRadius;
                 
-                // تطبيق تصفير تام ومباشر للحدود والخلفية عند إيقاف إظهارهما لمنع الأثر
                 div.style.border = layer.borderVisible ? `${layer.borderWidth} solid ${layer.borderColor}` : 'none';
                 div.style.background = layer.bgVisible ? hexToRgba(layer.bgColor, 0.85) : 'transparent';
                 
@@ -958,14 +989,18 @@
 
         function renderLayersList() {
             layersListContainer.innerHTML = '';
+            if (layers.length === 0) {
+                layersListContainer.innerHTML = '<div style="font-size: 9px; color: rgba(255,255,255,0.4); text-align: center; padding: 4px;">لا توجد طبقات.</div>';
+                return;
+            }
             layers.forEach((layer, index) => {
                 const row = document.createElement('div');
                 row.className = `layer-item-row ${layer.id === activeLayerId ? 'active' : ''}`;
                 row.innerHTML = `
-                    <span>طبقة ${index + 1}: ${layer.title}</span>
+                    <span>طبقة ${index + 1}: ${layer.title || 'فارغ'}</span>
                     <div class="layer-item-actions">
                         <button class="layer-action-icon-btn" onclick="selectLayer(${layer.id})" title="تعديل وتحديد">✏️</button>
-                        ${layers.length > 1 ? `<button class="layer-action-icon-btn" onclick="deleteLayer(${layer.id}, event)" title="حذف">🗑️</button>` : ''}
+                        <button class="layer-action-icon-btn" onclick="deleteLayer(${layer.id}, event)" title="حذف">🗑️</button>
                     </div>
                 `;
                 row.onclick = () => selectLayer(layer.id);
@@ -1015,6 +1050,8 @@
                     borderShowBtn.classList.remove('active');
                     borderHideBtn.classList.add('active');
                 }
+            } else {
+                textInput.value = "";
             }
         }
 
@@ -1024,8 +1061,8 @@
             layers.push({
                 id: newId,
                 title: "نص جديد",
-                top: 40 + (layers.length * 15),
-                right: 20,
+                top: 30 + (layers.length * 12),
+                right: 15,
                 fontFamily: "'Cairo', sans-serif",
                 fontSize: "14px",
                 color: "#d8b4fe",
@@ -1047,18 +1084,29 @@
         }
 
         function deleteLayer(id, e) {
-            e.stopPropagation();
-            if (layers.length <= 1) {
-                alert('لا يمكن حذف الطبقة الأخيرة!');
+            if(e) e.stopPropagation();
+            saveState();
+            layers = layers.filter(l => l.id !== Number(id));
+            activeLayerId = layers.length > 0 ? layers[0].id : null;
+            renderLayersWorkspace();
+            renderLayersList();
+            syncControlsWithActiveLayer();
+            saveToLocalStorage();
+        }
+
+        function deleteActiveLayerBtn() {
+            if (!activeLayerId) {
+                alert('لا توجد طبقة محددة للحذف!');
                 return;
             }
-            saveState();
-            layers = layers.filter(l => l.id !== id);
-            activeLayerId = layers[0].id;
-            initLayers();
+            deleteLayer(activeLayerId);
         }
 
         function updateActiveTextContent() {
+            if (!activeLayerId && layers.length === 0) {
+                addNewLayer();
+                return;
+            }
             saveState();
             const layer = layers.find(l => l.id === activeLayerId);
             if (layer) {
@@ -1077,8 +1125,10 @@
             e.stopPropagation();
             if (historyState.length > 0) {
                 layers = historyState.pop();
-                if (!layers.some(l => l.id === activeLayerId)) {
+                if (layers.length > 0 && !layers.some(l => l.id === activeLayerId)) {
                     activeLayerId = layers[0].id;
+                } else if (layers.length === 0) {
+                    activeLayerId = null;
                 }
                 initLayers();
                 alert('تم استرجاع الخطوة الأخيرة بنجاح!');
@@ -1165,8 +1215,8 @@
             if (direction === 'right') layer.right -= step;
             if (direction === 'left') layer.right += step;
             if (direction === 'center') {
-                layer.top = 50;
-                layer.right = 100;
+                layer.top = 40;
+                layer.right = 80;
             }
             renderLayersWorkspace();
         }
@@ -1187,12 +1237,14 @@
             
             const clonedImg = bgImage.cloneNode(true);
             clonedPreviewContainer.appendChild(clonedImg);
+
+            const scaleFactor = clonedPreviewContainer.clientWidth / previewBoundary.clientWidth || 1;
             
             layers.forEach(layer => {
                 const clonedLayer = document.createElement('div');
                 clonedLayer.className = 'overlay-layer';
-                clonedLayer.style.top = (layer.top * 0.9) + 'px';
-                clonedLayer.style.right = (layer.right * 0.9) + 'px';
+                clonedLayer.style.top = (layer.top * scaleFactor) + 'px';
+                clonedLayer.style.right = (layer.right * scaleFactor) + 'px';
                 clonedLayer.style.fontFamily = layer.fontFamily;
                 clonedLayer.style.textAlign = layer.textAlign;
                 clonedLayer.style.borderRadius = layer.borderRadius;
@@ -1204,8 +1256,10 @@
                 let innerShadow = layer.glowInner !== "0px" ? `inset 0 0 ${layer.glowInner} ${layer.color}` : '';
                 let textShadows = [outerShadow, innerShadow].filter(Boolean).join(', ');
 
+                const scaledFontSize = (parseInt(layer.fontSize) || 14) * scaleFactor;
+
                 clonedLayer.innerHTML = `
-                    <h3 style="font-size: ${layer.fontSize}; color: ${layer.color}; font-weight: ${layer.fontWeight}; -webkit-text-stroke: ${layer.strokeWidth} ${layer.strokeColor}; text-shadow: ${textShadows || 'none'}; opacity: ${layer.opacity};">${layer.title}</h3>
+                    <h3 style="font-size: ${scaledFontSize}px; color: ${layer.color}; font-weight: ${layer.fontWeight}; -webkit-text-stroke: ${layer.strokeWidth} ${layer.strokeColor}; text-shadow: ${textShadows || 'none'}; opacity: ${layer.opacity};">${layer.title}</h3>
                 `;
                 clonedPreviewContainer.appendChild(clonedLayer);
             });
@@ -1218,11 +1272,13 @@
             const exportImg = bgImage.cloneNode(true);
             exportPreviewContainer.appendChild(exportImg);
             
+            const scaleFactor = exportPreviewContainer.clientWidth / previewBoundary.clientWidth || 1;
+
             layers.forEach(layer => {
                 const exportLayer = document.createElement('div');
                 exportLayer.className = 'overlay-layer';
-                exportLayer.style.top = (layer.top * 0.5) + 'px';
-                exportLayer.style.right = (layer.right * 0.5) + 'px';
+                exportLayer.style.top = (layer.top * scaleFactor) + 'px';
+                exportLayer.style.right = (layer.right * scaleFactor) + 'px';
                 exportLayer.style.fontFamily = layer.fontFamily;
                 exportLayer.style.textAlign = layer.textAlign;
                 exportLayer.style.borderRadius = layer.borderRadius;
@@ -1234,8 +1290,10 @@
                 let innerShadow = layer.glowInner !== "0px" ? `inset 0 0 ${layer.glowInner} ${layer.color}` : '';
                 let textShadows = [outerShadow, innerShadow].filter(Boolean).join(', ');
 
+                const scaledFontSize = (parseInt(layer.fontSize) || 14) * scaleFactor;
+
                 exportLayer.innerHTML = `
-                    <h3 style="font-size: ${layer.fontSize}; color: ${layer.color}; font-weight: ${layer.fontWeight}; -webkit-text-stroke: ${layer.strokeWidth} ${layer.strokeColor}; text-shadow: ${textShadows || 'none'}; opacity: ${layer.opacity};">${layer.title}</h3>
+                    <h3 style="font-size: ${scaledFontSize}px; color: ${layer.color}; font-weight: ${layer.fontWeight}; -webkit-text-stroke: ${layer.strokeWidth} ${layer.strokeColor}; text-shadow: ${textShadows || 'none'}; opacity: ${layer.opacity};">${layer.title}</h3>
                 `;
                 exportPreviewContainer.appendChild(exportLayer);
             });
@@ -1252,10 +1310,12 @@
                 canvas.width = img.naturalWidth || 1200;
                 canvas.height = img.naturalHeight || 675;
                 
+                ctx.filter = bgImage.style.filter || 'none';
                 ctx.drawImage(img, 0, 0, canvas.width, canvas.height);
+                ctx.filter = 'none';
                 
                 const containerWidth = previewBoundary.clientWidth || 400;
-                const containerHeight = previewBoundary.clientHeight || 225;
+                const containerHeight = previewBoundary.clientHeight || 165;
                 const scaleX = canvas.width / containerWidth;
                 const scaleY = canvas.height / containerHeight;
 
@@ -1264,7 +1324,7 @@
                     
                     const elem = document.querySelector(`.overlay-layer:nth-of-type(${layers.indexOf(layer) + 1})`) || previewBoundary.children[layers.indexOf(layer) + 1];
                     const w = elem ? elem.offsetWidth : 120;
-                    const h = elem ? elem.offsetHeight : 45;
+                    const h = elem ? elem.offsetHeight : 40;
                     
                     const x = canvas.width - ((layer.right + w) * scaleX);
                     const y = layer.top * scaleY;
@@ -1272,7 +1332,6 @@
                     const boxHeight = h * scaleY;
                     const radius = (parseFloat(layer.borderRadius) || 6) * scaleX;
 
-                    // رسم الخلفية فقط إذا كانت مفعلة تماماً
                     if (layer.bgVisible) {
                         ctx.beginPath();
                         ctx.roundRect(x, y, boxWidth, boxHeight, radius);
@@ -1280,7 +1339,6 @@
                         ctx.fill();
                     }
 
-                    // رسم الحدود فقط إذا كانت مفعلة تماماً
                     if (layer.borderVisible) {
                         ctx.beginPath();
                         ctx.roundRect(x, y, boxWidth, boxHeight, radius);
@@ -1324,6 +1382,109 @@
                 link.href = canvas.toDataURL('image/png');
                 link.click();
             };
+        }
+
+        function applyFilter(filterType) {
+            if (filterType === 'none') {
+                bgImage.style.filter = 'none';
+            } else if (filterType === 'cinematic') {
+                bgImage.style.filter = 'sepia(30%) contrast(110%) brightness(95%)';
+            } else if (filterType === 'night') {
+                bgImage.style.filter = 'brightness(80%) hue-rotate(180deg) saturate(120%)';
+            } else if (filterType === 'contrast') {
+                bgImage.style.filter = 'contrast(150%) saturate(130%)';
+            } else if (filterType === 'sepia') {
+                bgImage.style.filter = 'sepia(80%)';
+            } else if (filterType === 'grayscale') {
+                bgImage.style.filter = 'grayscale(100%) contrast(120%)';
+            }
+            saveToLocalStorage();
+        }
+
+        function applyTextPreset(presetType) {
+            if (!activeLayerId && layers.length === 0) addNewLayer();
+            saveState();
+            const layer = layers.find(l => l.id === activeLayerId) || layers[0];
+
+            if (presetType === 'title') {
+                layer.color = "#38bdf8";
+                layer.bgColor = "#0369a1";
+                layer.borderColor = "#38bdf8";
+                layer.glowOuter = "12px";
+                layer.borderWidth = "2px";
+                layer.fontWeight = "900";
+            } else if (presetType === 'poetic') {
+                layer.color = "#f472b6";
+                layer.bgColor = "#581c87";
+                layer.borderColor = "#f472b6";
+                layer.glowOuter = "6px";
+                layer.borderWidth = "1px";
+                layer.fontWeight = "600";
+            } else if (presetType === 'alert') {
+                layer.color = "#f87171";
+                layer.bgColor = "#7f1d1d";
+                layer.borderColor = "#f87171";
+                layer.glowOuter = "10px";
+                layer.borderWidth = "2px";
+                layer.fontWeight = "900";
+            }
+            initLayers();
+            alert('تم تطبيق النمط بنجاح!');
+        }
+
+        function saveCurrentAsTemplate() {
+            const nameInput = document.getElementById('newTemplateNameInput');
+            const templateName = nameInput.value.trim() || `قالب ${customTemplates.length + 1}`;
+            
+            const currentTemplateData = JSON.parse(JSON.stringify(layers));
+            customTemplates.push({
+                id: Date.now(),
+                name: templateName,
+                layers: currentTemplateData
+            });
+            nameInput.value = '';
+            renderTemplatesList();
+            saveToLocalStorage();
+            alert(`تم حفظ القالب "${templateName}" بنجاح!`);
+        }
+
+        function renderTemplatesList() {
+            customTemplatesListContainer.innerHTML = '';
+            if (customTemplates.length === 0) {
+                customTemplatesListContainer.innerHTML = '<div style="font-size: 9px; color: rgba(255,255,255,0.4); text-align: center; padding: 4px;">لا توجد قوالب محفوظة.</div>';
+                return;
+            }
+            customTemplates.forEach(tmpl => {
+                const row = document.createElement('div');
+                row.className = 'layer-item-row';
+                row.innerHTML = `
+                    <span>📁 ${tmpl.name}</span>
+                    <div class="layer-item-actions">
+                        <button class="layer-action-icon-btn" onclick="loadCustomTemplate(${tmpl.id})" title="تطبيق">✔️</button>
+                        <button class="layer-action-icon-btn" onclick="deleteCustomTemplate(${tmpl.id}, event)" title="حذف">🗑️</button>
+                    </div>
+                `;
+                customTemplatesListContainer.appendChild(row);
+            });
+        }
+
+        function loadCustomTemplate(id) {
+            const tmpl = customTemplates.find(t => t.id === id);
+            if (tmpl) {
+                saveState();
+                layers = JSON.parse(JSON.stringify(tmpl.layers));
+                activeLayerId = layers.length > 0 ? layers[0].id : null;
+                initLayers();
+                alert(`تم تطبيق القالب "${tmpl.name}" بنجاح!`);
+            }
+        }
+
+        function deleteCustomTemplate(id, e) {
+            e.stopPropagation();
+            customTemplates = customTemplates.filter(t => t.id !== id);
+            renderTemplatesList();
+            saveToLocalStorage();
+            alert('تم حذف القالب بنجاح!');
         }
 
         function togglePreviewMode(e) {
@@ -1380,7 +1541,7 @@
 
         function switchTab(tabId, btnElement) {
             document.querySelectorAll('.main-tab-btn').forEach(b => b.classList.remove('active'));
-            btnElement.classList.add('active');
+            if(btnElement) btnElement.classList.add('active');
 
             previewDisplayPanel.classList.remove('show');
             isPreviewOpen = false;
@@ -1480,6 +1641,7 @@
         }
 
         function updateFontFamily() {
+            if (!activeLayerId) return;
             saveState();
             const layer = layers.find(l => l.id === activeLayerId);
             if(layer) {
@@ -1489,6 +1651,7 @@
         }
 
         function updateTextSize() {
+            if (!activeLayerId) return;
             saveState();
             const layer = layers.find(l => l.id === activeLayerId);
             if(layer) {
@@ -1498,6 +1661,7 @@
         }
 
         function setBold(weight, btn) {
+            if (!activeLayerId) return;
             saveState();
             if (btn) {
                 btn.parentElement.querySelectorAll('.sub-action-btn').forEach(b => b.classList.remove('active'));
@@ -1511,6 +1675,7 @@
         }
 
         function updateFontColor() {
+            if (!activeLayerId) return;
             saveState();
             const layer = layers.find(l => l.id === activeLayerId);
             if(layer) {
@@ -1520,6 +1685,7 @@
         }
 
         function updateTextGlow() {
+            if (!activeLayerId) return;
             saveState();
             const layer = layers.find(l => l.id === activeLayerId);
             if(layer) {
@@ -1530,6 +1696,7 @@
         }
 
         function updateFontStroke() {
+            if (!activeLayerId) return;
             saveState();
             const layer = layers.find(l => l.id === activeLayerId);
             if(layer) {
@@ -1540,6 +1707,7 @@
         }
 
         function setTextAlign(align, btn) {
+            if (!activeLayerId) return;
             saveState();
             btn.parentElement.querySelectorAll('.sub-action-btn').forEach(b => b.classList.remove('active'));
             btn.classList.add('active');
@@ -1551,6 +1719,7 @@
         }
 
         function toggleBackground(show, btn) {
+            if (!activeLayerId) return;
             saveState();
             btn.parentElement.querySelectorAll('.sub-action-btn').forEach(b => b.classList.remove('active'));
             btn.classList.add('active');
@@ -1562,6 +1731,7 @@
         }
 
         function updateBackgroundColor() {
+            if (!activeLayerId) return;
             saveState();
             const layer = layers.find(l => l.id === activeLayerId);
             if(layer) {
@@ -1571,6 +1741,7 @@
         }
 
         function toggleBorder(show, btn) {
+            if (!activeLayerId) return;
             saveState();
             btn.parentElement.querySelectorAll('.sub-action-btn').forEach(b => b.classList.remove('active'));
             btn.classList.add('active');
@@ -1582,6 +1753,7 @@
         }
 
         function updateBorderWidth() {
+            if (!activeLayerId) return;
             saveState();
             const layer = layers.find(l => l.id === activeLayerId);
             if(layer) {
@@ -1591,6 +1763,7 @@
         }
 
         function updateBorderRadius() {
+            if (!activeLayerId) return;
             saveState();
             const layer = layers.find(l => l.id === activeLayerId);
             if(layer) {
@@ -1600,15 +1773,17 @@
         }
 
         function updateBorderColor() {
+            if (!activeLayerId) return;
             saveState();
             const layer = layers.find(l => l.id === activeLayerId);
             if(layer) {
                 layer.borderColor = borderColorPicker.value;
-                renderLayersWorkspace(); // تحديث فوري ولحظي على الطبقة النشطة
+                renderLayersWorkspace(); 
             }
         }
 
         function updateTextOpacity() {
+            if (!activeLayerId) return;
             saveState();
             const layer = layers.find(l => l.id === activeLayerId);
             if(layer) {
